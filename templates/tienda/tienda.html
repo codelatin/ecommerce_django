@@ -1,0 +1,168 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<section class="section-pagetop bg">
+    <div class="container">
+            <h2 class="title-page">Buscar</h2>
+            <h2 class="title-page">Nuestra Tienda</h2>
+    
+    </div> <!-- container //  -->
+    </section>
+
+    <section class="section-content padding-y">
+        <div class="container">
+        
+        <div class="row">
+            <aside class="col-md-3">
+                
+        <div class="card">
+            <article class="filter-group">
+                <header class="card-header">
+                    <a href="#" data-toggle="collapse" data-target="#collapse_1" aria-expanded="true" class="">
+                        <i class="icon-control fa fa-chevron-down"></i>
+                        <h6 class="title">Categorias</h6>
+                    </a>
+                </header>
+                <div class="filter-content collapse show" id="collapse_1" style="">
+                    <div class="card-body">
+                        
+                        <ul class="list-menu">
+                            <li> <a href="{% url 'tienda' %}">Todos Los Productos</a></li>
+                            {% for categoria in links %}
+                        <li><a href="{{ categoria.get_url }}">{{categoria.nombre_categoria}} </a></li>
+                        {% endfor %}
+                        
+                        </ul>
+        
+                    </div> <!-- card-body.// -->
+                </div>
+            </article> <!-- filter-group  .// -->
+            <article class="filter-group">
+                <header class="card-header">
+                    <a href="#" data-toggle="collapse" data-target="#collapse_4" aria-expanded="true" class="">
+                        <i class="icon-control fa fa-chevron-down"></i>
+                        <h6 class="title">Tallas</h6>
+                    </a>
+                </header>
+                <div class="filter-content collapse show" id="collapse_4" style="">
+                    <div class="card-body">
+                      <label class="checkbox-btn">
+                        <input type="checkbox">
+                        <span class="btn btn-light"> XS </span>
+                      </label>
+        
+                      <label class="checkbox-btn">
+                        <input type="checkbox">
+                        <span class="btn btn-light"> S</span>
+                      </label>
+        
+                      <label class="checkbox-btn">
+                        <input type="checkbox">
+                        <span class="btn btn-light"> M</span>
+                      </label>
+        
+                      <label class="checkbox-btn">
+                        <input type="checkbox">
+                        <span class="btn btn-light"> L </span>
+                      </label>
+                </div><!-- card-body.// -->
+                </div>
+            </article> <!-- filter-group .// -->
+            
+            <article class="filter-group">
+                <header class="card-header">
+                    <a href="#" data-toggle="collapse" data-target="#collapse_3" aria-expanded="true" class="">
+                        <i class="icon-control fa fa-chevron-down"></i>
+                        <h6 class="title">Rango Precio</h6>
+                    </a>
+                </header>
+                <div class="filter-content collapse show" id="collapse_3" style="">
+                    <div class="card-body">
+                        
+                        <div class="form-row">
+                        <div class="form-group col-md-6">
+                          <label>Minimo</label>
+                          <!-- <input class="form-control" placeholder="$0" type="number"> -->
+                              <select class="mr-2 form-control">
+                                <option value="0">$0</option>
+                                <option value="50">$50</option>
+                                <option value="100">$100</option>
+                                <option value="150">$150</option>
+                                <option value="200">$200</option>
+                                <option value="500">$500</option>
+                                <option value="1000">$1000</option>
+                            </select>
+                        </div>
+                        <div class="form-group text-right col-md-6">
+                          <label>Maximo</label>
+                              <select class="mr-2 form-control">
+                                <option value="50">$50</option>
+                                <option value="100">$100</option>
+                                <option value="150">$150</option>
+                                <option value="200">$200</option>
+                                <option value="500">$500</option>
+                                <option value="1000">$1000</option>
+                                <option value="2000">$2000+</option>
+                            </select>
+                        </div>
+                        </div> <!-- form-row.// -->
+                        <button class="btn btn-block btn-primary">Applicar</button>
+                    </div><!-- card-body.// -->
+                </div>
+            </article> <!-- filter-group .// -->
+            
+        </div> <!-- card.// -->
+        
+            </aside> <!-- col.// -->
+            <main class="col-md-9">
+        
+        <header class="border-bottom mb-4 pb-3">
+                <div class="form-inline">
+                    <span class="mr-md-auto"><b>{{contar_productos }}</b> Productos Ecnontrados </span>
+                    
+                </div>
+        </header><!-- sect-heading -->
+        
+        <div class="row">
+            {% for producto in productos %}
+            <div class="col-md-4">
+                <figure class="card card-product-grid">
+                    <div class="img-wrap"> 
+                        
+                        <a href="{{producto.get_url }}" class="img-wrap"> <img src="{{producto.imagen.url}}"> </a>
+  
+                    </div> <!-- img-wrap.// -->
+                    <figcaption class="info-wrap">
+                        <div class="fix-height">
+                            <a href="{{producto.get_url }}" class="title">{{ producto.nombre_producto }}</a>
+                            <div class="price-wrap mt-2">
+                                <span class="price">${{ producto.precio}}</span>
+                            </div> <!-- price-wrap.// -->
+                        </div>
+                        <a href="#" class="btn btn-block btn-success">Añadir al Carrito</a>
+                    </figcaption>
+                </figure>
+            </div> <!-- col.//  no elimino esta -->
+            {% endfor %}
+        </div> <!-- row end.//  hasta aqui-->
+        
+        
+        <nav class="mt-4" aria-label="Page navigation sample">
+          <ul class="pagination">
+            <li class="page-item disabled"><a class="page-link" href="#">Anterior</a></li>
+            <li class="page-item active"><a class="page-link" href="#">1</a></li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item"><a class="page-link" href="#">Siguiente</a></li>
+          </ul>
+        </nav>
+        
+            </main> <!-- col.// -->
+        
+        </div>
+        
+        </div> <!-- container .//  -->
+        </section>
+
+{% endblock %}
