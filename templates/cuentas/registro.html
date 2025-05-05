@@ -1,0 +1,157 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    /* Fondo general de la sección de registro */
+.section-content {
+  background: linear-gradient(135deg, #f0f4f8, #ffffff);
+  padding: 40px 15px;
+}
+
+/* Tarjeta de registro */
+.card.mx-auto {
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+  background-color: #fff;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card.mx-auto:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.25);
+}
+
+/* Título del formulario */
+.card-body header {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.card-body header h2 {
+  font-family: 'Poppins', sans-serif;
+  font-size: 2rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #2980B9;
+  border-bottom: 2px solid #2980B9;
+  padding-bottom: 10px;
+}
+
+/* Estilos para los inputs y selects */
+.form-control {
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  padding: 10px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  font-family: 'Poppins', sans-serif;
+}
+
+.form-control:focus {
+  border-color: #2980B9;
+  box-shadow: 0 0 8px rgba(41, 128, 185, 0.4);
+}
+
+/* Botón de registro */
+.btn-primary.btn-block {
+  background-color: #2980B9;
+  border: none;
+  padding: 12px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  border-radius: 8px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.btn-primary.btn-block:hover {
+  background-color: #1F6391;
+  transform: scale(1.02);
+}
+
+.errorlist {
+  color: #e74c3c;
+  list-style: none;
+  padding-left: 0;
+  font-size: 0.9rem;
+  margin-top: 5px;
+}
+
+/* Enlaces de registro */
+p.text-center a {
+  color: #2980B9;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+p.text-center a:hover {
+  color: #1F6391;
+}
+
+</style>
+<section class="section-content padding-y">
+
+
+
+    <!-- ============================ COMPONENT REGISTER   ================================= -->
+        <div class="card mx-auto" style="max-width:520px; margin-top:40px;">
+          <article class="card-body">
+            {% include 'includes/alerts.html' %}
+            <header class="mb-4">
+                <h2 class="text-center">Registrate</h2>
+              </header>
+              
+            <form action="{% url 'registro' %}" method="POST">
+              {% csrf_token %}
+                    <div class="form-row">
+                        <div class="col form-group">
+                            <label>Nombre</label>
+                            {{ formulario.nombre }}
+                        </div> <!-- form-group end.// -->
+                        <div class="col form-group">
+                            <label>Apellido</label>
+                            {{ formulario.apellido }}
+                        </div> <!-- form-group end.// -->
+                    </div> <!-- form-row end.// -->
+                    <div class="form-row">
+                      <div class="form-group col-md-6">
+
+                        <label>Email</label>
+                        {{ formulario.email }}
+
+
+                    </div> <!-- form-group end.// -->
+                        <div class="form-group col-md-6">
+                          <label>Telefono</label>
+                          {{ formulario.telefono }}
+                        </div> <!-- form-group end.// -->
+                 
+                    </div> <!-- form-row.// -->
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label>Crear Contraseña</label>
+                            {{ formulario.password }}
+                        </div> <!-- form-group end.// --> 
+                        <div class="form-group col-md-6">
+                            <label>Repetir contraseña</label>
+                             {{ formulario.confirmar_password }}
+                        </div> <!-- form-group end.// -->  
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary btn-block"> Registrate  </button>
+                    </div> 
+                     {{ formulario.errors }}
+                     {{ formulario.non_field_erros }}    
+                        
+                </form>
+            </article><!-- card-body.// -->
+        </div> <!-- card .// -->
+        <p class="text-center mt-4">Ya tienes Cuenta? <a href="{% url 'login' %}">LogIn</a></p>
+        <br><br>
+    <!-- ============================ COMPONENT REGISTER  END.// ================================= -->
+    
+    
+    </section>
+
+{% endblock %}
+

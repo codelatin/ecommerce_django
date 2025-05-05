@@ -1,0 +1,263 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+    /* Estilos generales para la sección del carrito */
+
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+
+
+.input-group-prepend .btn,
+.input-group-append .btn {
+  background-color: #f1f1f1;
+  border: none;
+  transition: background-color 0.3s ease;
+}
+
+.input-group-prepend .btn:hover,
+.input-group-append .btn:hover {
+  background-color: #e0e0e0;
+}
+
+/* Campo de cantidad */
+.input-group .form-control {
+  text-align: center;
+  border: 1px solid #ccc;
+  border-left: none;
+  border-right: none;
+}
+
+/* Enlace de eliminar producto */
+.btn.btn-danger {
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.btn.btn-primary:hover {
+  background-color: #c0392b;
+}
+
+.form-control {
+  border: 1px solid #303030;
+  border-radius: 5px;
+  padding: 10px 15px;
+  font-size: 1rem;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease-in-out;
+  background-color: #fff;
+}
+
+.form-control:focus {
+  border-color: #27d455;
+  box-shadow: 0 0 8px rgba(6, 237, 29, 0.4);
+  transform: scale(1.02);
+}
+
+@keyframes fadeSlideUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+form {
+  animation: fadeSlideUp 0.9s ease-out;
+}
+
+
+/* Resumen del carrito (aside) */
+aside.col-lg-3 .card {
+  background: linear-gradient(135deg, #f6f9fc, #e9eff5);
+  border: none;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+aside.col-lg-3 .card-body dl {
+  margin-bottom: 15px;
+}
+
+aside.col-lg-3 .card-body dl dt {
+  font-weight: bold;
+  font-size: 1rem;
+  color: #2c3e50;
+}
+
+aside.col-lg-3 .card-body dl dd {
+  font-size: 1.1rem;
+  text-align: right;
+  color: #34495e;
+}
+
+/* Botones en el resumen */
+aside.col-lg-3 .card-body .btn-success {
+  background-color: #27ae60;
+  border: none;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+aside.col-lg-3 .card-body .btn-success:hover {
+  background-color: #1e8449;
+}
+
+aside.col-lg-3 .card-body .btn-primary {
+  background-color: #2980B9;
+  border: none;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+aside.col-lg-3 .card-body .btn-primary:hover {
+  background-color: #1f6391;
+}
+
+/* Paginación */
+.pagination .page-link {
+  border: none;
+  background-color: #fff;
+  color: #2980B9;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.pagination .page-link:hover {
+  background-color: #e9ecef;
+  transform: scale(1.05);
+}
+
+.pagination .page-item.active .page-link {
+  background-color: #2980B9;
+  color: #fff;
+}
+
+</style>
+<section class="section-content padding-y bg">
+    <div class="container">
+   
+    <div class="row">
+        <aside class="col-lg-6">
+    <div class="card">
+
+    <div class="card-body">
+        <h4 class="card-title mb-4">Direcciòn de envio</h4>
+        <form action="">
+            <div class="form-row">
+                <div class="col form-group">
+                    <label for="">Nombre</label>
+                    <input type="text" name="nombre" class="form-control" required>
+                </div>
+                <div class="col form-group">
+                    <label for="">Apellido</label>
+                    <input type="text" name="apellido" class="form-control" required>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col form-group">
+                    <label for="">Email</label>
+                    <input type="email" name="email" class="form-control" required>
+                </div>
+                <div class="col form-group">
+                    <label for="">Telefono</label>
+                    <input type="text" name="telefono" class="form-control" required>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col form-group">
+                    <label for="">Direcciòn</label>
+                    <input type="text" name="direccion" class="form-control" required>
+                </div>
+                <div class="col form-group">
+                    <label for="">Ciudad</label>
+                    <input type="text" name="ciudad" class="form-control" required>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col form-group">
+                    <label for="">Departamento</label>
+                    <input type="text" name="departamento" class="form-control" required>
+                </div>
+                <div class="col form-group">
+                    <label for="">Pais</label>
+                    <input type="text" name="pais" class="form-control" required>
+                </div>
+            </div>
+
+                <div class="form-row">
+                    <label for="">Mensaje del pedido</label>
+                    <textarea name="mensaje_pedido" rows="2" class="form-control"></textarea>
+                </div>
+        </form>
+    </div>
+    </div> <!-- card.// -->
+    
+        </aside> <!-- col.// -->
+        <aside class="col-lg-6">
+    
+            <div class="card">
+            <div class="card-body">
+                <div class="card">
+                    <table class="table table-borderless table-shopping-cart">
+                    <thead class="text-muted">
+                    <tr class="small text-uppercase">
+                      <th scope="col">Producto</th>
+                      <th scope="col" width="120">Cantidad</th>
+                      <th scope="col" width="120">Precio</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        {% for carrito_item in carrito_items %}
+                    <tr>  
+                        <td>
+                            <figure class="itemside align-items-center">
+                                <div class="aside"><img src="{{ carrito_item.producto.imagen.url }}" class="img-sm"></div>
+                                <figcaption class="info">
+                                    <a href="{{ carrito_item.producto.get_url }}" class="title text-dark">{{ carrito_item.producto.nombre_producto}}</a>
+                                    <p class="text-muted small">
+                                        {% if carrito_item.variaciones.all %}
+                                            {% for item in carrito_item.variaciones.all %}
+                                                {{ item.variacion_categoria |capfirst }} : {{item.valor_variacion |capfirst  }} <br>
+                                            {% endfor %}
+                                        {% endif %} 
+                                    </p>
+                                </figcaption>
+                            </figure>
+                        </td>
+                        <td> 
+                                       <label for="">{{carrito_item.cantidad}}</label>
+                        </td>
+                        <td> 
+                            <div class="price-wrap"> 
+                                <var class="price">{{carrito_item.sub_total}}</var> 
+                                <small class="text-muted"> ${{carrito_item.producto.precio}} </small> 
+                            </div> <!-- price-wrap .// -->
+                        </td>
+                       
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                    </table>
+                    
+                
+                <a href="./place-order.html" class="btn btn-success btn-block"> realizar pedido </a>
+                <a href="{% url 'tienda' %}" class="btn btn-primary btn-block">Continuar Comprando!</a>
+            </div> <!-- card-body.// -->
+            </div> <!-- card.// -->
+    
+    </aside> <!-- col.// -->
+    
+    </div> <!-- row.// -->
+    <!-- ============================ COMPONENT 1 END .// ================================= -->
+    
+    </div> <!-- container .//  -->
+    </section>
+{% endblock %}

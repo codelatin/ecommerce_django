@@ -19,5 +19,29 @@ class Producto(models.Model):
 
     def __str__(self):
         return self.nombre_producto
+    
+class VariacionManager(models.Manager):
+        def colores(self):
+            return super(VariacionManager, self).filter(variacion_categoria='color', is_active=True)
+        
+        def tallas(self):
+            return super(VariacionManager, self).filter(variacion_categoria='talla', is_active=True)
+    
+    
 
-#excelente vista detalle producto y stock terminado!
+eleccion_variacion_categoria =(
+    ('color', 'color'),
+    ('talla','talla'),
+)
+
+class Variacion(models.Model):
+    producto=models.ForeignKey(Producto, on_delete=models.CASCADE)
+    variacion_categoria=models.CharField(max_length=100, choices=eleccion_variacion_categoria)
+    valor_variacion=models.CharField(max_length=100)
+    is_active=models.BooleanField(default=True)
+    fecha_creacion=models.DateTimeField(auto_now=True)
+
+    objects=VariacionManager()
+
+    def __unicode__(self):
+        return self.producto

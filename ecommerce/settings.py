@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'categorias',
     'auths',
     'tienda',
+    'carrito',
     #'cuentas',
 ]
 
@@ -69,6 +70,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'categorias.context_processors.menu_links',
+                'carrito.context_processors.contador_carrito',
             ],
         },
     },
@@ -135,8 +137,22 @@ STATIC_ROOT = BASE_DIR / "static"
 #los archovos media
 MEDIA_URL= '/media/'
 MEDIA_ROOT= BASE_DIR /'media'
-# Default primary key field type
-# https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
+
+from django.contrib.messages import constants as messages
+
+MESSAGE_TAGS = {
+    messages.INFO: "",
+    50: "critical",
+}
+
+#MI CONFIGURACION PARA VALIDAR LA CUENTA POR SMTP
+#EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER ='codelatincolombia@gmail.com'
+EMAIL_HOST_PASSWORD='qzbt vepo ggqi gmic'
+EMAIL_USE_TLS= True
+DEFAULT_FROM_EMAIL='codelatincolombia@gmail.com'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 

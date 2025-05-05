@@ -58,3 +58,9 @@ $(document).ready(function() {
 }); 
 // jquery end
 
+// funcion par el registro
+
+setTimeout(function(){
+    $('#mensaje').fadeOut('slow')
+}, 4000)
+

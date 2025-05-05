@@ -100,6 +100,13 @@ a:hover {
   height: 250px;
 }
 
+.banner-img {
+  width: 100% !important;  /* Hace que la imagen ocupe todo el ancho del contenedor */
+  height: 300px !important; /* Ajusta la altura del banner */
+  object-fit: cover !important; /* Recorta la imagen para ajustarla sin distorsionarla */
+  border-radius: 10px !important; /* Mantiene bordes redondeados si lo deseas */
+}
+
 .center-xy {
   top: 50%;
   left: 50%;

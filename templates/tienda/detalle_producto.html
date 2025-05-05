@@ -2,7 +2,233 @@
 {% load static %}
 
 {% block content %}
+<style>
+    
+.section-content {
+  background: #e8e6e6; 
+  padding-top: 40px;
+  padding-bottom: 40px;
+}
+/* Contenedor principal */
+.container {
+  padding: 20px;
+}
 
+/* Tarjeta del producto */
+.card {
+  border: none;                
+  border-radius: 12px;          
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); 
+  overflow: hidden;              
+  margin-bottom: 30px;
+  background-color: #fff;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);  /* Efecto de elevación */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.row.no-gutters {
+  margin: 0;
+}
+
+/* Estilos para el aside que contiene la galería */
+aside.col-md-6 {
+  padding: 0;
+}
+
+/* Estilos para la galería */
+.gallery-wrap {
+  position: relative;
+  overflow: hidden;
+}
+
+.img-big-wrap {
+  position: relative;
+}
+
+.img-big-wrap img {
+  width: 100%;
+  height: auto;
+  display: block;
+  transition: transform 0.3s ease, filter 0.3s ease;
+  object-fit: cover;
+  border-radius: 50%; /* Asegura que la imagen se recorte adecuadamente */
+}
+
+/* Efecto hover para la imagen */
+.img-big-wrap img:hover {
+  transform: scale(1.05);
+  filter: brightness(1.1);
+}
+
+.gallery-wrap::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.1);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.gallery-wrap:hover::after {
+  opacity: 1;
+}
+.titulo{
+font-family: 'Poppins', sans-serif;
+  font-size: 2.2rem;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  background: linear-gradient(45deg, #440149, #160352, #50e3c2);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+  margin-bottom: 20px;
+}
+/* Contenedor principal del contenido */
+.content-body {
+  font-family: 'Poppins', sans-serif;
+  color: #333;
+  padding: 20px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  margin-bottom: 20px;
+}
+
+/* Título del producto */
+.content-body .title {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 15px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #2c3e50;
+}
+
+/* Estilo para el precio */
+.price {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #e74c3c;
+}
+
+/* Descripción del producto */
+.content-body p {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #555;
+  margin-top: 15px;
+}
+
+/* Estilo para los encabezados de opciones (color, talla) */
+.item-option-select h6 {
+  font-size: 1.1rem;
+  margin-bottom: 8px;
+  color: #2c3e50;
+}
+
+/* Estilo para los selects */
+.form-control {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.form-control:focus {
+  transform: translateX(5px);
+  border-color: #e67e22;
+}
+
+
+
+
+/* Botón de agregar al carrito */
+.boton_add {
+  background-color: #0fdb0b;
+  border: none;
+  padding: 12px 20px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  border-radius: 5px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.boton_add {
+  background-color: #2980b9;
+  transform: scale(1.02);
+}
+
+/* Agrega un efecto de separación en los elementos con lineas horizontales */
+.content-body hr {
+  border: 0;
+  height: 1px;
+  background: #eaeaea;
+  margin: 20px 0;
+}
+
+/* estilos seccion reseñas */
+.box {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  padding: 20px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.box:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+}
+.section-heading h3 {
+  font-family: 'Poppins', sans-serif;
+  font-size: 2rem;
+  color: #2c3e50;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #3498db;
+  padding-bottom: 10px;
+}
+
+.icontext .text h6 {
+  font-family: 'Poppins', sans-serif;
+  font-size: 1rem;
+  color: #34495e;
+  margin: 0;
+}
+
+.icontext .text .date {
+  font-size: 0.9rem;
+  color: #95a5a6;
+}
+.icontext .icon {
+  width: 50px;
+  height: 50px;
+  transition: transform 0.3s ease;
+}
+
+.icontext:hover .icon {
+  transform: scale(1.1);
+}
+
+.box p {
+  font-family: 'Roboto', sans-serif;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: #555;
+}
+.row {
+  background: #f8f9fa; /* Un gris muy claro */
+  padding: 30px 0;
+}
+
+
+</style>
 <section class="section-content padding-y bg">
     <div class="container">
     
@@ -16,11 +242,13 @@
         </div> <!-- img-big-wrap.// -->
         
     </article> <!-- gallery-wrap .end// -->
-            </aside>
-            <main class="col-md-6 border-left">
+    </aside>
+    <main class="col-md-6 border-left">
+    <form action="{% url 'agregar_producto_carrito' unico_producto.id %}" method="POST">
+        {% csrf_token %}
     <article class="content-body">
     
-    <h2 class="title"> {{unico_producto.nombre_producto}}</h2>
+    <h2 class="titulo"> {{unico_producto.nombre_producto}}</h2>
     
     <div class="mb-3"> 
         <var class="price h4">${{unico_producto.precio}}</var> 
@@ -33,49 +261,41 @@
         <div class="row">
             <div class="item-option-select">
                 <h6>Elige Un Color</h6>
-                <div class="btn-group btn-group-sm btn-group-toggle" data-toggle="buttons">
-                  <label class="btn btn-light">
-                    <input type="radio" name="radio_color"> blanco
-                  </label>
-                  <label class="btn btn-light">
-                    <input type="radio" name="radio_color" > Gris
-                  </label>
-                  <label class="btn btn-light active">
-                    <input type="radio" name="radio_color checked"> azul
-                  </label>
-                  <label class="btn btn-light">
-                    <input type="radio" name="radio_color"> Negro
-                  </label>
-                </div> 
+                <select name="color" class="form-control" required>
+                    <option value="" disabled selected> Elige Un Color</option>
+                    {% for i in unico_producto.variacion_set.all %}
+                    {% if i.variacion_categoria == "color" %}
+                        <option value="{{ i.valor_variacion | lower }}">{{ i.valor_variacion | capfirst}}</option>
+                        {% endif %}
+                  {% endfor %}
+                  
+                </select>
             </div>
-        </div> <!-- row.// -->
-        <div class="row">
+        </div> 
+       <div class="row">
             <div class="item-option-select">
                 <h6>Elige una Talla</h6>
-                <div class="btn-group btn-group-sm btn-group-toggle" data-toggle="buttons">
-                  <label class="btn btn-light">
-                    <input type="radio" name="radio_color"> S
-                  </label>
-                  <label class="btn btn-light active">
-                    <input type="radio" name="radio_color" checked> M
-                  </label>
-                  <label class="btn btn-light">
-                    <input type="radio" name="radio_color"> L
-                  </label>
-                  <label class="btn btn-light">
-                    <input type="radio" name="radio_color"> XL
-                  </label>
-                </div> 
+                    <select name="talla" class="form-control">
+                        <option value="" disabled selected> Elige una Talla</option>
+
+                        {% for i in unico_producto.variacion_set.all %}
+                        {% if i.variacion_categoria == "talla"%}
+
+                        <option value="{{ i.valor_variacion | lower}}">{{ i.valor_variacion | capfirst}}</option>
+                        {% endif %}
+                        {% endfor %}
+                     </select>
             </div>
-        </div> <!-- row.// -->
+        </div> 
         <hr>
-        {% if unico_producto.stock <= 0 %}
+{% if unico_producto.stock <= 0 %}
         <h4 class='text-danger'>Im sorry se nos agoto este producto</h4>
-        {% else %}
-        <a href="./product-detail.html" class="btn  btn-primary"> <span class="text">Añadir al carrito</span> <i class="fas fa-shopping-cart"></i>  </a>
-        {% endif %}
-    </article> <!-- product-info-aside .// -->
-            </main> <!-- col.// -->
+{% else %}
+        <button type="submit"  class=" boton_add btn  btn-primary"> <span class="text">Añadir al carrito</span> <i class="fas fa-shopping-cart"></i> </button>
+{% endif %}
+    </article>
+    </form> <!-- product-info-aside .// -->
+    </main> <!-- col.// -->
         </div> <!-- row.// -->
     </div> <!-- card.// -->
     <!-- ============================ COMPONENT 1 END .// ================================= -->
@@ -101,9 +321,8 @@
             </div> <!-- icontext.// -->
             <div class="mt-3">
                 <p>
-                    Dummy comment Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                    quis nostrud exercitation ullamco laboris nisi ut aliquip
+                    Excelente son muy Cumplidos con los Envios, Productos de 
+                    excelente Calidad
                 </p>	
             </div>
         </article>

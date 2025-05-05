@@ -1,0 +1,75 @@
+{% autoescape off %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Activa tu cuenta</title>
+  <style>
+    body {
+      background-color: #f4f4f4;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      background-color: #ffffff;
+      max-width: 600px;
+      margin: 40px auto;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    h1 {
+      color: #27ae60;
+      text-align: center;
+    }
+    p {
+      font-size: 16px;
+      color: #333;
+      line-height: 1.5;
+    }
+    .btn {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 12px 25px;
+      background-color: #27ae60;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 6px;
+      font-weight: bold;
+      text-align: center;
+    }
+    .footer {
+      margin-top: 40px;
+      font-size: 13px;
+      text-align: center;
+      color: #888;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>¡Bienvenido a CodeLatin!</h1>
+    
+    <p>Hola <strong>{{ user.nombre }}</strong>,</p>
+
+    <p>Gracias por registrarte. Por favor, haz clic en el botón de abajo para confirmar tu cuenta:</p>
+
+    <p style="text-align: center;">
+      <a href="http://{{ domain }}{% url 'activar_cuenta' uidb64=uid token=token %}" class="btn">
+        Confirmar Cuenta
+      </a>
+    </p>
+
+    <p>Si no te registraste en nuestro sitio, puedes ignorar este correo.</p>
+
+    <div class="footer">
+      © {{ current_year|default:"2025" }} CodeLatin. Todos los derechos reservados.
+    </div>
+  </div>
+
+</body>
+</html>
+
+{% endautoescape %}

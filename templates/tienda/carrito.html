@@ -1,0 +1,263 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+    /* Estilos generales para la sección del carrito */
+.section-content {
+  background: #f8f9fa;
+  padding: 40px 15px;
+}
+
+/* Tarjeta principal del carrito */
+.card {
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  margin-bottom: 30px;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Tabla del carrito */
+.table-shopping-cart {
+  width: 100%;
+  margin-bottom: 0;
+}
+
+.table-shopping-cart thead tr {
+  background-color: #3498db;
+  color: #fff;
+  text-transform: uppercase;
+  font-size: 0.9rem;
+}
+
+.table-shopping-cart tbody tr {
+  border-bottom: 1px solid #eaeaea;
+}
+
+/* Estilos para el input group (cantidad) */
+.input-group.input-spinner {
+  max-width: 120px;
+  margin: 0 auto;
+}
+
+.input-group-prepend .btn,
+.input-group-append .btn {
+  background-color: #f1f1f1;
+  border: none;
+  transition: background-color 0.3s ease;
+}
+
+.input-group-prepend .btn:hover,
+.input-group-append .btn:hover {
+  background-color: #e0e0e0;
+}
+
+/* Campo de cantidad */
+.input-group .form-control {
+  text-align: center;
+  border: 1px solid #ccc;
+  border-left: none;
+  border-right: none;
+}
+
+/* Enlace de eliminar producto */
+.btn.btn-danger {
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.btn.btn-danger:hover {
+  background-color: #c0392b;
+}
+
+/* Resumen del carrito (aside) */
+aside.col-lg-3 .card {
+  background: linear-gradient(135deg, #f6f9fc, #e9eff5);
+  border: none;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+aside.col-lg-3 .card-body dl {
+  margin-bottom: 15px;
+}
+
+aside.col-lg-3 .card-body dl dt {
+  font-weight: bold;
+  font-size: 1rem;
+  color: #2c3e50;
+}
+
+aside.col-lg-3 .card-body dl dd {
+  font-size: 1.1rem;
+  text-align: right;
+  color: #34495e;
+}
+
+/* Botones en el resumen */
+aside.col-lg-3 .card-body .btn-success {
+  background-color: #27ae60;
+  border: none;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+aside.col-lg-3 .card-body .btn-success:hover {
+  background-color: #1e8449;
+}
+
+aside.col-lg-3 .card-body .btn-primary {
+  background-color: #2980B9;
+  border: none;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+aside.col-lg-3 .card-body .btn-primary:hover {
+  background-color: #1f6391;
+}
+
+/* Paginación */
+.pagination .page-link {
+  border: none;
+  background-color: #fff;
+  color: #2980B9;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.pagination .page-link:hover {
+  background-color: #e9ecef;
+  transform: scale(1.05);
+}
+
+.pagination .page-item.active .page-link {
+  background-color: #2980B9;
+  color: #fff;
+}
+
+</style>
+<section class="section-content padding-y bg">
+    <div class="container">
+    
+    <!-- ============================ COMPONENT 1 ================================= -->
+    {% if not carrito_items %}
+    <h2 class="text-danger text-center">El carrito Esta Vacio</h2>
+    <br>
+    <div class="text-center">
+        <a href="{% url 'tienda' %}" class="btn btn-primary">Continuar Comprando</a>
+    </div>
+    {% else %}
+    <div class="row">
+        <aside class="col-lg-9">
+    <div class="card">
+    <table class="table table-borderless table-shopping-cart">
+    <thead class="text-muted">
+    <tr class="small text-uppercase">
+      <th scope="col">Producto</th>
+      <th scope="col" width="120">Cantidad</th>
+      <th scope="col" width="120">Precio</th>
+      <th scope="col" class="text-right" width="200"> </th>
+    </tr>
+    </thead>
+    <tbody>
+        {% for carrito_item in carrito_items %}
+    <tr>  
+        <td>
+            <figure class="itemside align-items-center">
+                <div class="aside"><img src="{{ carrito_item.producto.imagen.url }}" class="img-sm"></div>
+                <figcaption class="info">
+                    <a href="{{ carrito_item.producto.get_url }}" class="title text-dark">{{ carrito_item.producto.nombre_producto}}</a>
+                    <p class="text-muted small">
+                        {% if carrito_item.variaciones.all %}
+                            {% for item in carrito_item.variaciones.all %}
+                                {{ item.variacion_categoria |capfirst }} : {{item.valor_variacion |capfirst  }} <br>
+                            {% endfor %}
+                        {% endif %} 
+                    </p>
+                </figcaption>
+            </figure>
+        </td>
+        <td> 
+            <!-- col.// -->
+                        <div class="col"> 
+                            <div class="input-group input-spinner">
+                                <div class="input-group-prepend">
+                                <a href="{% url 'disminuir_cantidad_producto' carrito_item.producto.id  carrito_item.id %}" class="btn btn-light" type="button" id="button-plus"> <i class="fa fa-minus"></i> </a>
+                                </div>
+                                <input type="text" class="form-control"  value="{{carrito_item.cantidad}}">
+                                <div class="input-group-append">
+                                <form>
+                                    {% csrf_token %}
+                                        {% for item in carrito_item.variaciones.all %}
+                                        <input type="hidden" name="{{ item.variacion_categoria | lower }}" value="{{ item.valor_variacion | capfirst }}">
+                                        {% endfor %}
+                                        <a href="{% url 'aumentar_cantidad_producto' carrito_item.producto.id carrito_item.id %}" class="btn btn-light">
+                                            <i class="fa fa-plus"></i>
+                                        </a>
+
+                            </form>
+                                </div>
+                            </div> <!-- input-group.// -->
+                        </div> <!-- col.// -->
+        </td>
+        <td> 
+            <div class="price-wrap"> 
+                <var class="price">{{carrito_item.sub_total}}</var> 
+                <small class="text-muted"> ${{carrito_item.producto.precio}} </small> 
+            </div> <!-- price-wrap .// -->
+        </td>
+        <td class="text-right"> 
+        <a href="{% url 'eliminar_producto_carrito' carrito_item.producto.id carrito_item.id %}" onclick="return confirm('Realmente deseas eliminar este Producto?')" class="btn btn-danger"> Eliminar</a>
+        </td>
+    </tr>
+    {% endfor %}
+    
+   
+    </tbody>
+    </table>
+    </div> <!-- card.// -->
+    
+        </aside> <!-- col.// -->
+        <aside class="col-lg-3">
+    
+            <div class="card">
+            <div class="card-body">
+                <dl class="dlist-align">
+                  <dt>Precio Total:</dt>
+                  <dd class="text-right">$ {{total}}</dd>
+                </dl>
+                <dl class="dlist-align">
+                  <dt>Iva:</dt>
+                  <dd class="text-right"> {{iva}}</dd>
+                </dl>
+                <dl class="dlist-align">
+                  <dt>Total:</dt>
+                  <dd class="text-right text-dark b"><strong>$ {{total_pagar}}</strong></dd>
+                </dl>
+                <hr>
+                <p class="text-center mb-3">
+                    <img src="{% static './images/misc/payments.png' %}" height="26">
+                </p>
+                <a href="{% url 'pagar' %}" class="btn btn-success btn-block"> Pagar </a>
+                <a href="{% url 'tienda' %}" class="btn btn-primary btn-block">Continuar Comprando!</a>
+            </div> <!-- card-body.// -->
+            </div> <!-- card.// -->
+    
+    </aside> <!-- col.// -->
+    
+    </div> 
+    {% endif %}
+    <!-- row.// -->
+    <!-- ============================ COMPONENT 1 END .// ================================= -->
+    
+    </div> <!-- container .//  -->
+    </section>
+{% endblock %}        

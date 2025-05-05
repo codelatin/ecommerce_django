@@ -1,3 +1,4 @@
+
 {% load static %}
 
 <!DOCTYPE HTML>
@@ -11,6 +12,7 @@
 <title>LatinShop Codelatin</title>
 
 <link href="{% static 'images/favicon.ico' %}" rel="shortcut icon" type="image/x-icon">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
 
 <!-- jQuery -->
 <script src="{% static 'js/jquery-2.0.0.min.js' %}" type="text/javascript"></script>
@@ -18,6 +20,7 @@
 <!-- Bootstrap4 files-->
 <script src="{% static 'js/bootstrap.bundle.min.js' %}" type="text/javascript"></script>
 <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet" type="text/css"/>
+
 
 <!-- Font awesome 5 -->
 <link href=" {% static 'fonts/fontawesome/css/all.min.css' %}" type="text/css" rel="stylesheet">
@@ -40,100 +43,220 @@ $(document).ready(function() {
 // jquery end
 </script>
 
+<style>
+	body {
+  margin: 0;
+  font-family: "Poppins", Arial, sans-serif;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #fff;
+  text-align: left;
+  background: linear-gradient(to right, #f2f3f4, #e9eaeb) !important;
+}
+
+.img-wrap {
+  position: relative;
+  overflow: hidden; /* Oculta cualquier parte que se salga del contenedor */
+}
+
+.img-wrap img {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+
+.img-wrap img {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.img-wrap img {
+  filter: grayscale(100%);
+  transition: filter 0.3s ease;
+}
+
+.img-wrap img:hover {
+  filter: grayscale(0%);
+}
+
+
+.img-wrap img:hover {
+  transform: scale(1.1) translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.img-wrap img {
+  transform: scale(1);
+  opacity: 0.9;
+  transition: transform 0.4s ease, opacity 0.4s ease;
+}
+
+.card.card-product-grid {
+    border: none;
+    border-radius: 10px;           
+    overflow: hidden;             
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card.card-product-grid:hover {
+    transform: scale(1.03);        
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); 
+}
+
+.section-title {
+  font-family: 'Poppins', sans-serif;
+  font-size: 2.2rem;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  background: linear-gradient(45deg, #440149, #160352, #50e3c2);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+  margin-bottom: 20px;
+}
+</style>
+
 </head>
 <body>
 
 
-<header class="section-header">
-<nav class="navbar p-md-0 navbar-expand-sm navbar-light border-bottom">
-<div class="container">
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTop4" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarTop4">
-    <ul class="navbar-nav mr-auto">
-    	<li class="nav-item dropdown">
-		 	<a href="#" class="nav-link">   Ingles </a>
-		    
-		</li>
-		<li class="nav-item dropdown">
-			<a href="#" class="nav-link"> USD </a>
-		</li>
-    </ul>
-    <ul class="navbar-nav">
-		<li><a href="#" class="nav-link"> <i class="fa fa-envelope"></i> Email </a></li>
-		<li><a href="#" class="nav-link"> <i class="fa fa-phone"></i> Llamanos </a></li>
-	</ul> <!-- list-inline //  -->
-  </div> <!-- navbar-collapse .// -->
-</div> <!-- container //  -->
-</nav>
-
-<section class="header-main border-bottom">
-	<div class="container">
-<div class="row align-items-center">
-	<div class="col-lg-2 col-md-3 col-6">
-		<a href="./" class="brand-wrap">
-			<img class="logo" style="width: 150px; height:160px;" src="{% static './images/colombia34.png' %}">
-		</a> <!-- brand-wrap.// -->
-	</div>
-	<div class="col-lg col-sm col-md col-6 flex-grow-0">
-		<div class="category-wrap dropdown d-inline-block float-right">
-			<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"> 
-				<i class="fa fa-bars"></i> Categorias 
-			</button>
-			<div class="dropdown-menu">
+	<header class="section-header">
+		<nav class="navbar p-md-0 navbar-expand-sm navbar-light border-bottom">
+		<div class="container">
+		  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTop4" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		  </button>
+		  <div class="collapse navbar-collapse" id="navbarTop4">
+			<ul class="navbar-nav mr-auto">
+			  <li class="nav-item dropdown">
+			  <a href="#" class="nav-link">   English </a>
+			</li>
+			<li class="nav-item dropdown">
+			  <a href="#" class="nav-link"> USD </a>
+			  <ul class="dropdown-menu small">
+				<li><a class="dropdown-item" href="#">EUR</a></li>
+				<li><a class="dropdown-item" href="#">AED</a></li>
+				<li><a class="dropdown-item" href="#">RUBL </a></li>
+				</ul>
+			</li>
+			</ul>
+			<ul class="navbar-nav">
+			<li><a href="#" class="nav-link"> <i class="fa fa-envelope"></i> Email </a></li>
+			<li><a href="#" class="nav-link"> <i class="fa fa-phone"></i> Llamanos </a></li>
+		  </ul> <!-- list-inline //  -->
+		  </div> <!-- navbar-collapse .// -->
+		</div> <!-- container //  -->
+		</nav>
+		
+		<section class="header-main border-bottom">
+		  <div class="container">
+		<div class="row align-items-center">
+		  <div class="col-lg-2 col-md-3 col-6">
+			<a href="{% url 'inicio' %}" class="brand-wrap">
+			  <img class="logo" src="{% static './images/logo3.jpg' %}">
+			</a> <!-- brand-wrap.// -->
+		  </div>
+		  <div class="col-lg col-sm col-md col-6 flex-grow-0">
+			<div class="category-wrap dropdown d-inline-block float-right">
+			  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+				<i class="fa fa-bars"></i> Categorias
+			  </button>
+			  <div class="dropdown-menu">
 				{%  for categoria in links  %}
-          <a class="dropdown-item" href="{{ categoria.get_url }}">{{categoria.nombre_categoria}}</a>
-          {% endfor %}
-			</div>
-		</div>  <!-- category-wrap.// -->
-	</div> <!-- col.// -->
-	<a href="{% url 'tienda' %}" class="btn btn-outline-primary">Tienda</a>
-	<div class="col-lg  col-md-6 col-sm-12 col">
-		<form action="#" class="search">
-			<div class="input-group w-100">
-			    <input type="text" class="form-control" style="width:60%;" placeholder="Buscar">
-			    
-			    <div class="input-group-append">
-			      <button class="btn btn-primary" type="submit">
-			        <i class="fa fa-search"></i>
-			      </button>
-			    </div>
-		    </div>
-		</form> <!-- search-wrap .end// -->
-	</div> <!-- col.// -->
-	<div class="col-lg-3 col-sm-6 col-8 order-2 order-lg-3">
+				  <a class="dropdown-item" href="{{ categoria.get_url }}">{{categoria.nombre_categoria}}</a>
+				  {% endfor %}
+			  </div>
+			</div>  <!-- category-wrap.// -->
+		  </div> <!-- col.// -->
+		  <a href="{% url 'tienda' %}" class="btn btn-outline-primary">Tienda</a>
+		  <div class="col-lg  col-md-6 col-sm-12 col">
+			<form action="{% url 'buscar_producto' %}" class="search" method='GET'>
+			  <div class="input-group w-100">
+				  <input type="text" class="form-control" style="width:60%;" placeholder="Buscar" name="keypalabra">
+		
+				  <div class="input-group-append">
+					<button class="btn btn-primary" type="submit">
+					  <i class="fa fa-search"></i>
+					</button>
+				  </div>
+				</div>
+			</form> <!-- search-wrap .end// -->
+		  </div> <!-- col.// -->
+		  <div class="col-lg-3 col-sm-6 col-8 order-2 order-lg-3">
 				<div class="d-flex justify-content-end mb-3 mb-lg-0">
+					{% if user.id is None %}
 					<div class="widget-header">
-						<small class="title text-muted" style="color: white;" > Bienvenido!</small>
-						<div> 
-							<a href="./signin.html" >Login</a> <span class="dark-transp"> | </span>
-							<a href="./register.html"> Registro</a>
-						</div>
+					  <small class="title text-muted">Bienvenido Usuario!</small>
+					  <div>
+						<a href="{% url 'login' %}">Login</a> <span class="dark-transp"> | </span>
+						<a href="{% url 'registro' %}"> Registro</a>
+					  </div>
 					</div>
-					<a href="./cart.html" class="widget-header pl-3 ml-3">
-						<div class="icon icon-sm rounded-circle border"><i class="fa fa-shopping-cart"></i></div>
-						<span class="badge badge-pill badge-danger notify">0</span>
-					</a>
+					{% else %}
+					<div class="widget-header">
+					  <small class="title text-muted">Bienvenido {{user.nombre}}!</small>
+					  <div>
+						<a href="{% url 'dashboard_usuario' %}">Dashboard</a> <span class="dark-transp"> | </span>
+						<a href="{% url 'logout' %}"> Salir</a>
+					  </div>
+					</div>
+					{% endif %}
+				 
+				  <a href="{% url 'carrito' %}" class="widget-header pl-3 ml-3">
+					<div class="icon icon-sm rounded-circle border"><i class="fa fa-shopping-cart"></i></div>
+					<span class="badge badge-pill badge-danger notify">{{contar_carrito}}</span>
+				  </a>
 				</div> <!-- widgets-wrap.// -->
-			</div> <!-- col.// -->
-</div> <!-- row.// -->
-	</div> <!-- container.// -->
-</section> <!-- header-main .// -->
-
-
-
-
-</header> <!-- section-header.// -->
+			  </div> <!-- col.// -->
+		</div> <!-- row.// -->
+		  </div> <!-- container.// -->
+		</section> <!-- header-main .// -->
+		
+		
+		
+		
+		</header> <!-- section-header.// -->
 
 
 <!-- ========================= SECTION MAIN ========================= -->
 <section class="section-intro padding-y-sm">
 <div class="container">
 
-<div class="intro-banner-wrap">
-	<img src="{% static 'images/banners/banner.png' %}" class="img-fluid rounded banner-img">
-</div>
+	<div id="bannerCarousel" class="carousel slide" data-ride="carousel">
+		<!-- Indicadores (puntos que indican el slide actual) -->
+		<ol class="carousel-indicators">
+		  <li data-target="#bannerCarousel" data-slide-to="0" class="active"></li>
+		  <li data-target="#bannerCarousel" data-slide-to="1"></li>
+		  <li data-target="#bannerCarousel" data-slide-to="2"></li>
+		</ol>
+	  
+		<!-- Contenedor de las imágenes del slider -->
+		<div class="carousel-inner">
+		  <div class="carousel-item active">
+			<img src="{% static 'images/banners/banner.png' %}" class="d-block w-100 banner-img" alt="Banner 1">
+		  </div>
+		  <div class="carousel-item">
+			<img src="{% static 'images/banners/banner_2.png' %}" class="d-block w-100 banner-img" alt="Banner 2">
+		  </div>
+		  <div class="carousel-item">
+			<img src="{% static 'images/banners/banner3.png' %}" class="d-block w-100 banner-img" alt="Banner 3">
+		  </div>
+		</div> 	 	
+	  
+		<!-- Controles para navegar entre los slides -->
+		<a class="carousel-control-prev" href="#bannerCarousel" role="button" data-slide="prev">
+		  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+		  <span class="sr-only">Anterior</span>
+		</a>
+		<a class="carousel-control-next" href="#bannerCarousel" role="button" data-slide="next">
+		  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+		  <span class="sr-only">Siguiente</span>
+		</a>
+	  </div>
+	  
 
 </div> <!-- container //  -->
 </section>
@@ -155,7 +278,8 @@ $(document).ready(function() {
 		<div class="card card-product-grid">
 			<a href="{{producto.get_url }}" class="img-wrap"> <img src="{{producto.imagen.url}}"> </a>
 			<figcaption class="info-wrap">
-				<a href="{{producto.get_url }}" class="title">{{producto.nombre_producto}}</a>
+				<a href="{{producto.get_url }}" class="overl-btn">{{producto.nombre_producto}} </a>
+				<div class="overlay-text">Ver Detalle</div>
 				<div class="price mt-1">${{producto.precio}}</div>
 			</figcaption>
 		</div>
@@ -190,6 +314,14 @@ $(document).ready(function() {
 	</div><!-- //container -->
 </footer>
 <!-- ========================= FOOTER END // ========================= -->
+
+<script>
+	$(document).ready(function(){
+	  $('#bannerCarousel').on('slide.bs.carousel', function () {
+		$('.carousel-item.active img').addClass('animate__animated animate__fadeIn');
+	  });
+	});
+  </script>
 
 </body>
 </html>

@@ -1,0 +1,175 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    /* Tarjetas con sombra suave */
+.card {
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 4px 25px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 30px rgba(0, 0, 0, 0.15);
+}
+
+/* Sidebar moderno */
+.list-group-item {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+.list-group-item:hover {
+  background-color: #f0f0f0;
+  color: #e67e22;
+}
+
+/* Botones animados */
+.btn {
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+.btn-outline-primary:hover {
+  background-color: #e67e22;
+  color: #fff;
+  border-color: #e67e22;
+}
+.btn-light:hover {
+  background-color: #f8f9fa;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Títulos y precios */
+.title {
+  font-weight: 600;
+  color: #343a40;
+}
+.price {
+  font-size: 15px;
+  color: #888;
+}
+
+/* Imagenes con efecto */
+.img-xs {
+  border-radius: 10px;
+  transition: transform 0.3s ease;
+}
+.img-xs:hover {
+  transform: scale(1.05);
+}
+
+/* Fade-in general para que todo aparezca suavemente */
+.fade-in {
+  opacity: 0;
+  animation: fadeIn 0.8s ease forwards;
+}
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+.table-hover tbody tr:hover {
+  background-color: #14b84b;
+}
+a.btn:hover {
+  transform: scale(1.03);
+}
+
+
+
+</style>
+
+<section class="section-conten padding-y bg">
+    {% include 'includes/alerts.html' %} 
+
+    <div class="container fade-in">
+        <div class="row">
+        <aside class="col-md-3 fade-in">
+            <!--   SIDEBAR   -->
+            <ul class="list-group">
+                <a class="list-group-item active" href="#"> Mi Historial de oedidos </a>
+                <a class="list-group-item" href="#"> Transacciones </a>
+                <a class="list-group-item" href="#"> Devolución y reembolsos </a>
+                <a class="list-group-item" href="#">Ajustes </a>
+                <a class="list-group-item" href="#"> Mis artículos en venta </a>
+                <a class="list-group-item" href="#">Pedidos recibidos </a>
+            </ul>
+            <br>
+            <a class="btn btn-light btn-block" href="{% url 'logout' % }"> <i class="fa fa-power-off"></i> <span class="text">Salir</span> </a> 
+            <!--   SIDEBAR .//END   -->
+        </aside>
+        <main class="col-md-9 fade-in">
+            <article class="card">
+            <header class="card-header">
+                <strong class="d-inline-block mr-3">ID Pedido: 6123456789</strong>
+                <span>Fecha Pedido: 16 December 2018</span>
+            </header>
+            <div class="card-body">
+                <div class="row"> 
+                    <div class="col-md-8">
+                        <h6 class="text-muted">Entregado a</h6>
+                        <p>Juan Jose Messi <br>  
+                        Telefono +123456789 Email: CodelatinColombia@gmail.com <br>
+                        Ubicacion: Colombia  
+                         </p>
+                    </div>
+                    <div class="col-md-4">
+                        <h6 class="text-muted">Metodo de pago:</h6>
+                        <span class="text-success">
+                            <i class="fab fa-lg fa-cc-visa"></i>
+                            Visa  **** 4216  
+                        </span>
+                        <p>Subtotal: $356 <br>
+                            Tarifa de envío:  $56 <br> 
+                         <span class="b">Total:  $456 </span>
+                        </p>
+                    </div>
+                </div> <!-- row.// -->
+            </div> <!-- card-body .// -->
+            <div class="table-responsive">
+            <table class="table table-hover">
+                <tr>
+                    <td width="65">
+                        <img src="../images/items/1.jpg" class="img-xs border">
+                    </td>
+                    <td> 
+                        <p class="title mb-0">Nombre Producto </p>
+                        <var class="price text-muted">USD 145</var>
+                    </td>
+                    <td> Vendido <br> Zapatillas Nike</td>
+                    <td width="250"> <a href="#" class="btn btn-outline-primary">Seguimiento</a> <a href="#" class="btn btn-light"> Detalles </a> </td>
+                </tr>
+                <tr>
+                    <td>
+                        <img src="../images/items/2.jpg" class="img-xs border">
+                    </td>
+                    <td> 
+                        <p class="title mb-0">producto2 </p>
+                        <var class="price text-muted">USD 15</var>
+                    </td>
+                    <td> Seller <br> Ara shop </td>
+                    <td> <a href="#" class="btn btn-outline-primary">Seguimiento</a> <a href="#" class="btn btn-light"> Detalles </a> </td>
+                </tr>
+                <tr>
+                    <td>
+                        <img src="../images/items/3.jpg" class="img-xs border">
+                    </td>
+                    <td> 
+                        <p class="title mb-0">producto3 </p>
+                        <var class="price text-muted">USD 145</var>
+                    </td>
+                    <td> Vendido <br> Tiendas D1 </td>
+                    <td> <a href="#" class="btn btn-outline-primary">Seguimiento</a> <a href="#" class="btn btn-light"> Detalles</a> </td>
+                </tr>
+            </table>
+            </div> <!-- table-responsive .end// -->
+            </article> <!-- order-group.// --> 
+        </main>
+    </div> <!-- row.// -->
+    </div>
+    
+    
+    </section>
+    <!-- ========================= SECTION CONTENT END// ========================= -->
+    
+    
+{% endblock %}

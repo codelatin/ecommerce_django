@@ -1,5 +1,6 @@
 {% load static %}
 
+
 <header class="section-header">
 <nav class="navbar p-md-0 navbar-expand-sm navbar-light border-bottom">
 <div class="container">
@@ -50,9 +51,9 @@
   </div> <!-- col.// -->
   <a href="{% url 'tienda' %}" class="btn btn-outline-primary">Tienda</a>
   <div class="col-lg  col-md-6 col-sm-12 col">
-    <form action="" class="search" method='GET'>
+    <form action="{% url 'buscar_producto' %}" class="search" method='GET'>
       <div class="input-group w-100">
-          <input type="text" class="form-control" style="width:60%;" placeholder="Buscar" name="keyword">
+          <input type="text" class="form-control" style="width:60%;" placeholder="Buscar" name="keypalabra">
 
           <div class="input-group-append">
             <button class="btn btn-primary" type="submit">
@@ -64,23 +65,27 @@
   </div> <!-- col.// -->
   <div class="col-lg-3 col-sm-6 col-8 order-2 order-lg-3">
         <div class="d-flex justify-content-end mb-3 mb-lg-0">
+          {% if user.id is None %}
           <div class="widget-header">
             <small class="title text-muted">Bienvenido Usuario!</small>
             <div>
-              <a href="#">Login</a> <span class="dark-transp"> | </span>
-              <a href="#"> Registro</a>
+              <a href="{% url 'login' %}">Login</a> <span class="dark-transp"> | </span>
+              <a href="{% url 'registro' %}"> Registro</a>
             </div>
           </div>
+          {% else %}
           <div class="widget-header">
-            <small class="title text-muted">Bienvenido </small>
+            <small class="title text-muted">Bienvenido {{user.nombre}}!</small>
             <div>
-              <a href="#">Dashboard</a> <span class="dark-transp"> | </span>
-              <a href="#">Salir</a>
+              <a href="{% url 'dashboard_usuario' %}">Dashboard</a> <span class="dark-transp"> | </span>
+              <a href="{% url 'logout' %}"> Salir</a>
             </div>
           </div>
-          <a href="#" class="widget-header pl-3 ml-3">
+          {% endif %}
+          
+          <a href="{% url 'carrito' %}" class="widget-header pl-3 ml-3">
             <div class="icon icon-sm rounded-circle border"><i class="fa fa-shopping-cart"></i></div>
-            <span class="badge badge-pill badge-danger notify">11</span>
+            <span class="badge badge-pill badge-danger notify">{{contar_carrito}}</span>
           </a>
         </div> <!-- widgets-wrap.// -->
       </div> <!-- col.// -->
