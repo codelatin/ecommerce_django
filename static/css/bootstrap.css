@@ -60,15 +60,11 @@ article, aside, figcaption, figure, footer, header, hgroup, main, nav, section {
   display: block;
 }
 
+/* GENERAL */
 body {
-  margin: 0;
-  font-family: "Inter", Arial, "Helvetica Neue", "Segoe UI", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-  font-size: 1rem;
-  font-weight: 400;
-  line-height: 1.5;
-  color: #343a40;
-  text-align: left;
-  background-color: red !important;
+  background: radial-gradient(circle, #0f0f1b 0%, #05050a 100%);
+  font-family: 'Orbitron', sans-serif;
+  color: #00fff7;
 }
 
 [tabindex="-1"]:focus {

@@ -11,7 +11,7 @@
 
 <title>LatinShop Codelatin</title>
 
-<link href="{% static 'images/favicon.ico' %}" rel="shortcut icon" type="image/x-icon">
+<link href="{% static 'images/logo3.ico' %}" rel="shortcut icon" type="image/x-icon">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
 
 <!-- jQuery -->
@@ -29,6 +29,117 @@
 <link href="{% static 'css/ui.css' %}" rel="stylesheet" type="text/css"/>
 <link href="{% static 'css/responsive.css' %}" rel="stylesheet" media="only screen and (max-width: 1200px)" />
 
+<style>
+	/* GENERAL */
+	body {
+	  background: radial-gradient(circle, #0f0f1b 0%, #05050a 100%);
+	  font-family: 'Orbitron', sans-serif;
+	  color: #00fff7;
+	}
+	
+	/* HEADER */
+	.section-header {
+	  background: linear-gradient(90deg, #06060f, #101020);
+	  border-bottom: 2px solid #00fff7;
+	  box-shadow: 0 0 20px rgba(0, 255, 247, 0.2);
+	  padding: 10px 0;
+	}
+	
+	/* NAVBAR */
+	.navbar {
+	  background: transparent;
+	}
+	
+	.nav-link {
+	  color: #00fff7 !important;
+	  transition: color 0.3s;
+	}
+	
+	.nav-link:hover {
+	  color: #ffffff !important;
+	  text-shadow: 0 0 8px #00fff7;
+	}
+	
+	/* LOGO */
+	.logo {
+	  filter: drop-shadow(0 0 5px #00fff7);
+	  border-radius: 12px;
+	}
+	
+	/* BOTONES */
+	.btn-primary, .btn-outline-primary {
+	  background-color: transparent;
+	  color: #00fff7;
+	  border: 1px solid #00fff7;
+	  transition: 0.3s;
+	}
+	
+	.btn-primary:hover, .btn-outline-primary:hover {
+	  background-color: #00fff7;
+	  color: #000;
+	  box-shadow: 0 0 10px #00fff7;
+	}
+	
+	/* SEARCH BAR */
+	.input-group .form-control {
+	  background-color: #1a1a2e;
+	  color: #00fff7;
+	  border: 1px solid #00fff7;
+	}
+	
+	.input-group .btn {
+	  background-color: #00fff7;
+	  color: #000;
+	}
+	
+	/* DROPDOWNS */
+	.dropdown-menu {
+	  background-color: #0e0e1a;
+	  border: 1px solid #00fff7;
+	  box-shadow: 0 0 10px #00fff7;
+	}
+	
+	.dropdown-item {
+	  color: #00fff7;
+	}
+	
+	.dropdown-item:hover {
+	  background-color: #00fff7;
+	  color: #000;
+	}
+	
+	/* ICONOS */
+	.fa {
+	  color: #00fff7;
+	}
+	
+	/* WIDGET HEADER (login/registro) */
+	.widget-header {
+	  color: #ccc;
+	}
+	
+	.widget-header a {
+	  color: #00fff7;
+	  text-decoration: none;
+	}
+	
+	.widget-header a:hover {
+	  text-shadow: 0 0 6px #00fff7;
+	}
+	
+	/* CARRITO */
+	.icon-sm {
+	  background-color: #0e0e1a;
+	  border: 1px solid #00fff7;
+	  padding: 10px;
+	}
+	
+	.badge-danger {
+	  background-color: #ff00ff;
+	  box-shadow: 0 0 5px #ff00ff;
+	}
+	</style>
+
 <!-- custom javascript -->
 <script src="{% static 'js/script.js' %}" type="text/javascript"></script>
 
@@ -43,81 +154,6 @@ $(document).ready(function() {
 // jquery end
 </script>
 
-<style>
-	body {
-  margin: 0;
-  font-family: "Poppins", Arial, sans-serif;
-  font-size: 1rem;
-  font-weight: 400;
-  line-height: 1.5;
-  color: #fff;
-  text-align: left;
-  background: linear-gradient(to right, #f2f3f4, #e9eaeb) !important;
-}
-
-.img-wrap {
-  position: relative;
-  overflow: hidden; /* Oculta cualquier parte que se salga del contenedor */
-}
-
-.img-wrap img {
-  width: 200px;
-  height: 200px;
-  object-fit: cover;
-  border-radius: 50%;
-}
-
-
-.img-wrap img {
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.img-wrap img {
-  filter: grayscale(100%);
-  transition: filter 0.3s ease;
-}
-
-.img-wrap img:hover {
-  filter: grayscale(0%);
-}
-
-
-.img-wrap img:hover {
-  transform: scale(1.1) translateY(-5px);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-}
-
-.img-wrap img {
-  transform: scale(1);
-  opacity: 0.9;
-  transition: transform 0.4s ease, opacity 0.4s ease;
-}
-
-.card.card-product-grid {
-    border: none;
-    border-radius: 10px;           
-    overflow: hidden;             
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.card.card-product-grid:hover {
-    transform: scale(1.03);        
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); 
-}
-
-.section-title {
-  font-family: 'Poppins', sans-serif;
-  font-size: 2.2rem;
-  text-transform: uppercase;
-  letter-spacing: 1.5px;
-  background: linear-gradient(45deg, #440149, #160352, #50e3c2);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
-  margin-bottom: 20px;
-}
-</style>
 
 </head>
 <body>
