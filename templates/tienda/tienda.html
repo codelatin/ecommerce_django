@@ -3,94 +3,83 @@
 
 {% block content %}
 <style>
-    .card.card-product-grid {
-  border: none;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  background-color: #fff; /* Fondo blanco para resaltar el contenido */
+ /* === CONTENEDOR GENERAL DE SECCIÓN === */
+.section-content {
+  background: #0f0f1b; /* Fondo oscuro futurista */
+  padding-top: 40px;
+  padding-bottom: 40px;
+  color: #f0f0f0;
 }
 
-.card.card-product-grid:hover {
-  transform: translateY(-5px) scale(1.02);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-}
-/* Estilos para el Titulo */
+/* === TÍTULO SUPERIOR === */
 .title-page {
   font-family: 'Poppins', sans-serif;
   font-size: 2.5rem;
   text-transform: uppercase;
   letter-spacing: 1.5px;
-  background: linear-gradient(45deg, #ff6b6b, #f8e71c, #50e3c2);
+  background: linear-gradient(90deg, #00fff7, #ff6b6b, #f8e71c);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+  text-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
   margin-bottom: 20px;
+  text-align: center;
 }
 
-/* estilos imsgenes */
+/* === TARJETAS DE PRODUCTO === */
+.card.card-product-grid {
+  background-color: #1a1a2e;
+  border: none;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 8px 16px rgba(0, 255, 255, 0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card.card-product-grid:hover {
+  transform: translateY(-5px) scale(1.03);
+  box-shadow: 0 12px 20px rgba(0, 255, 255, 0.15);
+}
+
+/* === IMÁGENES DE PRODUCTO === */
 .img-wrap img {
   width: 200px;
   height: 200px;
   object-fit: cover;
   border-radius: 50%;
-}
-.img-wrap img {
-  transition: transform 0.3s ease, filter 0.3s ease;
   filter: brightness(0.95);
+  transition: transform 0.3s ease, filter 0.3s ease;
 }
 
 .img-wrap img:hover {
   transform: scale(1.05);
   filter: brightness(1.1);
 }
-.section-content {
-  background: #f9f9f9; /* Un gris muy claro para contraste */
-  padding-top: 40px;
-  padding-bottom: 40px;
-}
 
-/* paginaciòn estilos */
-.pagination .page-link {
-  border: none;
-  color: #343a40;
-  background-color: #fff;
-  margin: 0 2px;
-  transition: background-color 0.3s ease;
-}
-
-.pagination .page-link:hover {
-  background-color: #e9ecef;
-}
-
-.pagination .page-item.active .page-link {
-  background-color: #ff6b6b;
-  color: #fff;
-  border-color: #ff6b6b;
-}
+/* === FILTROS LATERALES === */
 .card {
   border: none;
   border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 12px rgba(0, 255, 255, 0.08);
   overflow: hidden;
   margin-bottom: 20px;
+  background-color: #12121c;
+  color: #f0f0f0;
 }
 
 .filter-group .card-header {
-  background: rgb(38, 86, 158); /* Color de acento en RGB */
-  color: #fff;
+  background: #00fff7;
+  color: #0f0f1b;
   padding: 10px 15px;
   cursor: pointer;
   transition: background 0.3s ease;
 }
 
 .filter-group .card-header:hover {
-  background: rgb(30, 70, 130); /* Un tono más oscuro al pasar el ratón */
+  background: #00d1d1;
 }
 
 .filter-group .card-body {
-  background: rgb(245, 245, 245); /* Fondo suave para el contenido */
+  background: #1e1e2e;
   padding: 15px;
 }
 
@@ -99,18 +88,88 @@
 }
 
 .list-menu li a {
-  color: #343a40;
+  color: #ffffff;
   text-decoration: none;
   transition: color 0.3s ease;
 }
 
 .list-menu li a:hover {
-  color: rgb(38, 86, 158); /* Usamos el mismo color de acento para el hover */
+  color: #00fff7;
 }
-.title{
-    color: #fff;
-    font-weight: bold;
+
+/* === TÍTULOS DE FILTROS === */
+.title {
+  color: #fff;
+  font-weight: bold;
+  text-shadow: 0 0 5px rgba(0, 255, 255, 0.3);
 }
+
+/* === PAGINACIÓN === */
+.pagination .page-link {
+  border: none;
+  color: #00fff7;
+  background-color: #1a1a2e;
+  margin: 0 2px;
+  border-radius: 6px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.pagination .page-link:hover {
+  background-color: #00fff7;
+  color: #0f0f1b;
+}
+
+.pagination .page-item.active .page-link {
+  background-color: #ff6b6b;
+  color: #fff;
+  border-color: #ff6b6b;
+  font-weight: bold;
+}
+
+/* === BOTÓN DE VER DETALLES === */
+.btn-success {
+  background: linear-gradient(135deg, #00f2fe, #4facfe);
+  border: none;
+  color: #0f0f1b;
+  font-weight: 600;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+.btn-success:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 12px rgba(0, 255, 255, 0.4);
+}
+
+/* === ETIQUETAS DE TALLA === */
+.checkbox-btn .btn-light {
+  background-color: #1a1a2e;
+  color: #00fff7;
+  border: 1px solid #00f2fe;
+  border-radius: 6px;
+  padding: 6px 12px;
+  transition: all 0.2s ease-in-out;
+}
+.checkbox-btn .btn-light:hover {
+  background: #00f2fe;
+  color: #0f0f1b;
+}
+.price {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #00fff7; /* color neón moderno */
+  background: rgba(0, 255, 247, 0.1); /* fondo suave */
+  padding: 6px 12px;
+  border-radius: 8px;
+  display: inline-block;
+  box-shadow: 0 0 8px rgba(0, 255, 247, 0.2);
+  transition: transform 0.2s ease;
+}
+
+.price:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 12px rgba(0, 255, 247, 0.4);
+}
+
 
 
 </style>

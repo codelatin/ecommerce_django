@@ -2,53 +2,189 @@
 
 {% block content %}
 <style>
-    /* Tarjetas con sombra suave */
+ /* ========== FONDO GENERAL ========== */
+body {
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  background-attachment: fixed;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #e0e0e0;
+}
+
+/* ========== TARJETAS MODERNAS ========== */
 .card {
-  border: none;
+  border: 1px solid rgba(255,255,255,0.05);
   border-radius: 15px;
-  box-shadow: 0 4px 25px rgba(0, 0, 0, 0.1);
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 0 10px rgba(0,255,247,0.1), 0 0 40px rgba(0,255,247,0.05);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  color: #fff;
 }
 .card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 6px 30px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 6px 30px rgba(0, 0, 0, 0.2);
+}
+.card-header {
+  background-color: rgba(255, 255, 255, 0.03);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  font-weight: bold;
+  font-size: 16px;
+  letter-spacing: 1px;
+  color: #00fff7;
 }
 
-/* Sidebar moderno */
+/* ========== SIDEBAR Y MENÚ ========== */
+.sidebar {
+  background-color: #1a1a1a;
+  width: 250px;
+  padding: 15px;
+  border-radius: 10px;
+  transition: transform 0.3s ease;
+}
+.hamburger {
+  display: none;
+  background-color: rgba(0, 255, 247, 0.1);
+  color: #00fff7;
+  font-size: 18px;
+  padding: 10px 15px;
+  border: 1px solid #00fff7;
+  cursor: pointer;
+  border-radius: 6px;
+  margin: 10px;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+.hamburger:hover {
+  background-color: #00fff7;
+  color: #000;
+  box-shadow: 0 0 10px #00fff7, 0 0 20px #00fff7;
+}
+
+/* Modo móvil */
+@media (max-width: 768px) {
+  .sidebar {
+    position: relative;
+    width: 100%;
+    display: none;
+    margin-bottom: 20px;
+  }
+  .sidebar.open {
+    display: block;
+  }
+  .hamburger {
+    display: block;
+  }
+}
+
+/* ========== LIST-GROUP - ÍTEMS DE NAVEGACIÓN ========== */
+.list-group {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  background-color: #1a1a1a;
+  border-radius: 10px;
+  overflow: hidden;
+}
 .list-group-item {
+  display: block;
+  padding: 12px 20px;
+  text-decoration: none;
+  color: #fff;
+  background-color: transparent;
   transition: background-color 0.3s ease, color 0.3s ease;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
 }
 .list-group-item:hover {
-  background-color: #f0f0f0;
-  color: #e67e22;
+  background-color: #00fff7;
+  color: #000;
+}
+.list-group-item.active {
+  background: linear-gradient(90deg, #6b6bff, #50e3c2);
+  color: #fff;
+  font-weight: bold;
 }
 
-/* Botones animados */
+/* Responsive horizontal menu */
+@media (max-width: 768px) {
+  .list-group {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+  }
+  .list-group-item {
+    flex: 1 1 50%;
+    text-align: center;
+    border-bottom: none;
+    border-right: 1px solid rgba(255,255,255,0.05);
+  }
+  .list-group-item:last-child {
+    border-right: none;
+  }
+}
+
+/* ========== BOTONES ESTILO NEÓN ========== */
 .btn {
   border-radius: 8px;
   transition: all 0.3s ease;
 }
+.btn-outline-primary {
+  border: 2px solid #00fff7;
+  color: #00fff7;
+  background-color: transparent;
+}
 .btn-outline-primary:hover {
-  background-color: #e67e22;
+  background-color: #00fff7;
+  color: #000;
+  box-shadow: 0 0 10px #00fff7, 0 0 40px #00fff7 inset;
+}
+.btn-light {
+  background-color: rgba(255, 255, 255, 0.1);
   color: #fff;
-  border-color: #e67e22;
+  border: 1px solid rgba(255,255,255,0.2);
 }
 .btn-light:hover {
-  background-color: #f8f9fa;
+  background-color: rgba(255,255,255,0.2);
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
+a.btn:hover {
+  transform: scale(1.03);
+}
 
-/* Títulos y precios */
+/* ========== TEXTO GENERAL Y TÍTULOS ========== */
+.card-body p {
+  color: #fff;
+  font-size: 16px;
+  line-height: 1.6;
+  margin-bottom: 0.75rem;
+  background-color: #0f0f0f;
+  padding: 10px;
+  border-radius: 10px;
+}
+.card-body h6 {
+  font-weight: 600;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #bdc3c7;
+}
+.card-body span,
+.card-body strong,
+.card-body .b {
+  color: #00fff7;
+  font-weight: 600;
+}
 .title {
   font-weight: 600;
-  color: #343a40;
+  font-size: 1rem;
+  color: #00fff7;
 }
 .price {
-  font-size: 15px;
-  color: #888;
+  font-size: 16px;
+  color: #f8e71c;
+  font-weight: bold;
 }
 
-/* Imagenes con efecto */
+/* ========== IMÁGENES ========== */
 .img-xs {
   border-radius: 10px;
   transition: transform 0.3s ease;
@@ -57,22 +193,110 @@
   transform: scale(1.05);
 }
 
-/* Fade-in general para que todo aparezca suavemente */
+/* ========== EFECTO FADE IN ========== */
 .fade-in {
   opacity: 0;
-  animation: fadeIn 0.8s ease forwards;
+  transform: translateY(20px);
+  animation: fadeInMove 0.8s ease forwards;
 }
-@keyframes fadeIn {
+@keyframes fadeInMove {
   to {
     opacity: 1;
+    transform: translateY(0);
   }
 }
+
+/* ========== TABLAS ========== */
+.table-hover tbody tr {
+  transition: background-color 0.3s ease;
+}
 .table-hover tbody tr:hover {
-  background-color: #14b84b;
+  background-color: rgba(0, 255, 247, 0.1);
+  cursor: pointer;
 }
-a.btn:hover {
-  transform: scale(1.03);
+/* ========== Mi mian Futurista========== */
+/* ========== MAIN FUTURISTA ========== */
+main.fade-in {
+  /* Fondo con transparencia y efecto de vidrio */
+  background: rgba(15, 15, 15, 0.8); /* Negro transparente */
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 20px;
+  padding: 2rem;
+  margin: 1.5rem auto;
+  box-shadow: 
+    0 0 15px rgba(0, 255, 247, 0.1),
+    inset 0 0 10px rgba(0, 255, 247, 0.05);
+  border: 1px solid rgba(0, 255, 247, 0.1);
+  transition: all 0.3s ease;
 }
+
+/* Animación de entrada mejorada */
+@keyframes fadeInScale {
+  0% {
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+main.fade-in {
+  animation: fadeInScale 1s ease forwards;
+}
+
+/* Efecto hover con neón */
+main.fade-in:hover {
+  box-shadow: 
+    0 0 20px rgba(0, 255, 247, 0.3),
+    0 0 40px rgba(0, 255, 247, 0.2) inset;
+  border-color: rgba(0, 255, 247, 0.3);
+  transform: translateY(-5px);
+}
+
+/* Estilo de texto dentro del main */
+main.fade-in h1,
+main.fade-in h2,
+main.fade-in h3,
+main.fade-in p {
+  color: #e0e0e0;
+  line-height: 1.6;
+}
+
+/* Separadores internos con neón */
+main.fade-in hr {
+  border-top: 1px solid rgba(0, 255, 247, 0.2);
+  margin: 2rem 0;
+}
+/* ========== ESTILO PARA EL VENDEDOR ========== */
+.vendido-info {
+  /* Color de texto brillante */
+  color: #00fff7; /* Azul neón */
+  font-weight: bold;
+  font-size: 15px;
+  letter-spacing: 0.5px;
+
+  /* Fondo con transparencia y brillo sutil */
+  background: rgba(0, 255, 247, 0.1);
+  border-radius: 8px;
+  padding: 8px 12px;
+  margin: 4px 0;
+
+  /* Efecto de brillo al pasar el mouse */
+  transition: all 0.3s ease;
+  box-shadow: 0 0 5px rgba(0, 255, 247, 0.2);
+}
+
+/* ========== EFECTO HOVER ========== */
+.vendido-info:hover {
+  background: rgba(0, 255, 247, 0.2);
+  box-shadow: 0 0 15px rgba(0, 255, 247, 0.4);
+  transform: scale(1.05);
+  cursor: pointer;
+}
+
 
 
 
@@ -80,31 +304,38 @@ a.btn:hover {
 
 <section class="section-conten padding-y bg">
     {% include 'includes/alerts.html' %} 
-
+    <button class="hamburger" onclick="toggleSidebar()">☰ Menú</button>
     <div class="container fade-in">
         <div class="row">
         <aside class="col-md-3 fade-in">
             <!--   SIDEBAR   -->
-            <ul class="list-group">
-                <a class="list-group-item active" href="#"> Mi Historial de oedidos </a>
-                <a class="list-group-item" href="#"> Transacciones </a>
-                <a class="list-group-item" href="#"> Devolución y reembolsos </a>
-                <a class="list-group-item" href="#">Ajustes </a>
-                <a class="list-group-item" href="#"> Mis artículos en venta </a>
-                <a class="list-group-item" href="#">Pedidos recibidos </a>
-            </ul>
+            
+<!-- Sidebar -->
+<nav class="sidebar" id="sidebar">
+  <ul class="list-group">
+    <li><a class="list-group-item active" href="#">Mi Historial de pedidos</a></li>
+    <li><a class="list-group-item" href="#">Transacciones</a></li>
+    <li><a class="list-group-item" href="#">Devolución y reembolsos</a></li>
+    <li><a class="list-group-item" href="#">Ajustes</a></li>
+    <li><a class="list-group-item" href="#">Mis artículos en venta</a></li>
+    <li><a class="list-group-item" href="#">Pedidos recibidos</a></li>
+  </ul>
+</nav>
             <br>
             <a class="btn btn-light btn-block" href="{% url 'logout' % }"> <i class="fa fa-power-off"></i> <span class="text">Salir</span> </a> 
             <!--   SIDEBAR .//END   -->
         </aside>
-        <main class="col-md-9 fade-in">
+
+
+        <main class="col-md-9 fade-in main_futurista">
             <article class="card">
             <header class="card-header">
                 <strong class="d-inline-block mr-3">ID Pedido: 6123456789</strong>
-                <span>Fecha Pedido: 16 December 2018</span>
+                <span>Fecha Pedido: 31 December 2025</span>
             </header>
+
             <div class="card-body">
-                <div class="row"> 
+                <div class="row">  
                     <div class="col-md-8">
                         <h6 class="text-muted">Entregado a</h6>
                         <p>Juan Jose Messi <br>  
@@ -135,7 +366,7 @@ a.btn:hover {
                         <p class="title mb-0">Nombre Producto </p>
                         <var class="price text-muted">USD 145</var>
                     </td>
-                    <td> Vendido <br> Zapatillas Nike</td>
+                    <td class="vendido-info">Vendido por <br> Amazon</td>
                     <td width="250"> <a href="#" class="btn btn-outline-primary">Seguimiento</a> <a href="#" class="btn btn-light"> Detalles </a> </td>
                 </tr>
                 <tr>
@@ -146,8 +377,7 @@ a.btn:hover {
                         <p class="title mb-0">producto2 </p>
                         <var class="price text-muted">USD 15</var>
                     </td>
-                    <td> Seller <br> Ara shop </td>
-                    <td> <a href="#" class="btn btn-outline-primary">Seguimiento</a> <a href="#" class="btn btn-light"> Detalles </a> </td>
+                    <td class="vendido-info"> Vendido por <br> Alibaba </td>                    <td> <a href="#" class="btn btn-outline-primary">Seguimiento</a> <a href="#" class="btn btn-light"> Detalles </a> </td>
                 </tr>
                 <tr>
                     <td>
@@ -157,7 +387,7 @@ a.btn:hover {
                         <p class="title mb-0">producto3 </p>
                         <var class="price text-muted">USD 145</var>
                     </td>
-                    <td> Vendido <br> Tiendas D1 </td>
+                    <td class="vendido-info"> Vendido <br> Tiendas D1 </td>
                     <td> <a href="#" class="btn btn-outline-primary">Seguimiento</a> <a href="#" class="btn btn-light"> Detalles</a> </td>
                 </tr>
             </table>
@@ -171,5 +401,11 @@ a.btn:hover {
     </section>
     <!-- ========================= SECTION CONTENT END// ========================= -->
     
+    <script>
+     function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('open');
+}
+
+    </script>
     
 {% endblock %}

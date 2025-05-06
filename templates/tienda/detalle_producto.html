@@ -3,337 +3,231 @@
 
 {% block content %}
 <style>
-    
-.section-content {
-  background: #e8e6e6; 
-  padding-top: 40px;
-  padding-bottom: 40px;
-}
-/* Contenedor principal */
-.container {
-  padding: 20px;
+  /* GENERAL */
+/* Estilo general oscuro y futurista */
+body {
+  background: radial-gradient(circle, #0f0f1b 0%, #05050a 100%);
+  font-family: 'Orbitron', sans-serif;
+  color: #00fff7;
 }
 
-/* Tarjeta del producto */
-.card {
-  border: none;                
-  border-radius: 12px;          
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); 
-  overflow: hidden;              
-  margin-bottom: 30px;
-  background-color: #fff;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+/* Contenedor principal del detalle */
+.detalle-container {
+  background: radial-gradient(circle, #0f0f1b 0%, #05050a 100%);
+  padding: 40px 15px;
+  font-family: 'Poppins', sans-serif;
 }
 
-.card:hover {
-  transform: translateY(-5px);  /* Efecto de elevación */
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-}
-
-.row.no-gutters {
-  margin: 0;
-}
-
-/* Estilos para el aside que contiene la galería */
-aside.col-md-6 {
-  padding: 0;
-}
-
-/* Estilos para la galería */
-.gallery-wrap {
-  position: relative;
+/* Card del producto */
+.detalle-container .detalle-card {
+  display: flex;
+  flex-wrap: wrap;
+  border-radius: 16px;
+  background: #0f0f1b;
+  box-shadow: 0 10px 25px rgba(0, 255, 255, 0.1);
   overflow: hidden;
+  transition: transform 0.3s;
+  margin-bottom: 30px;
 }
 
-.img-big-wrap {
-  position: relative;
+.detalle-container .detalle-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px rgba(0, 255, 255, 0.2);
 }
 
-.img-big-wrap img {
+/* Responsive diseño en columna */
+@media (max-width: 768px) {
+  .detalle-container .detalle-card {
+    flex-direction: column;
+  }
+  .detalle-container .detalle-card aside,
+  .detalle-container .detalle-card main {
+    width: 100%;
+  }
+}
+
+/* Imagen del producto */
+.detalle-container .img-big-wrap img {
   width: 100%;
-  height: auto;
-  display: block;
-  transition: transform 0.3s ease, filter 0.3s ease;
+  max-height: 400px;
   object-fit: cover;
-  border-radius: 50%; /* Asegura que la imagen se recorte adecuadamente */
+  border-radius: 0;
+  transition: transform 0.3s, filter 0.3s;
 }
-
-/* Efecto hover para la imagen */
-.img-big-wrap img:hover {
+.detalle-container .img-big-wrap img:hover {
   transform: scale(1.05);
   filter: brightness(1.1);
 }
 
-.gallery-wrap::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.1);
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-.gallery-wrap:hover::after {
-  opacity: 1;
-}
-.titulo{
-font-family: 'Poppins', sans-serif;
+/* Título del producto */
+.detalle-container .titulo {
   font-size: 2.2rem;
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 1.5px;
-  background: linear-gradient(45deg, #440149, #160352, #50e3c2);
+  background: linear-gradient(45deg, #00fff7, #00b3ff);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+  text-shadow: 1px 1px 3px rgba(0,255,247,0.3);
   margin-bottom: 20px;
 }
-/* Contenedor principal del contenido */
-.content-body {
-  font-family: 'Poppins', sans-serif;
-  color: #333;
-  padding: 20px;
-  background: #fff;
+
+/* Contenido del cuerpo */
+.detalle-container .content-body {
+  padding: 25px;
+  background: #1a1a2e;
+  color: #fff;
   border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  margin-bottom: 20px;
+  box-shadow: 0 2px 8px rgba(0,255,247,0.05);
 }
 
-/* Título del producto */
-.content-body .title {
-  font-size: 2rem;
-  font-weight: bold;
-  margin-bottom: 15px;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  color: #2c3e50;
-}
-
-/* Estilo para el precio */
-.price {
+/* Precio */
+.detalle-container .price {
   font-size: 1.8rem;
   font-weight: 700;
-  color: #e74c3c;
+  color: #ff4b4b;
+  margin-bottom: 15px;
 }
 
-/* Descripción del producto */
-.content-body p {
-  font-size: 1rem;
-  line-height: 1.6;
-  color: #555;
-  margin-top: 15px;
+/* Inputs y selects */
+.detalle-container .form-control {
+  border-radius: 8px;
+  border: 1px solid #00fff7;
+  background-color: #0f0f1b;
+  color: #00fff7;
+  padding: 10px;
 }
-
-/* Estilo para los encabezados de opciones (color, talla) */
-.item-option-select h6 {
-  font-size: 1.1rem;
-  margin-bottom: 8px;
-  color: #2c3e50;
-}
-
-/* Estilo para los selects */
-.form-control {
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  transition: transform 0.3s ease, border-color 0.3s ease;
-}
-
-.form-control:focus {
+.detalle-container .form-control:focus {
+  outline: none;
   transform: translateX(5px);
-  border-color: #e67e22;
+  border-color: #00b3ff;
+  box-shadow: 0 0 6px rgba(0, 255, 255, 0.4);
 }
 
-
-
-
-/* Botón de agregar al carrito */
-.boton_add {
-  background-color: #0fdb0b;
+/* Botón "Añadir al carrito" */
+.detalle-container .boton_add {
+  background: linear-gradient(135deg, #00f2fe, #4facfe);
+  color: #0f0f1b;
   border: none;
-  padding: 12px 20px;
-  font-size: 1.1rem;
-  font-weight: bold;
-  border-radius: 5px;
-  transition: background-color 0.3s ease, transform 0.3s ease;
+  padding: 12px 24px;
+  font-weight: 600;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  width: 100%;
+  margin-top: 20px;
+}
+.detalle-container .boton_add:hover {
+  background: linear-gradient(135deg, #4facfe, #00f2fe);
+  transform: scale(1.05);
 }
 
-.boton_add {
-  background-color: #2980b9;
-  transform: scale(1.02);
-}
-
-/* Agrega un efecto de separación en los elementos con lineas horizontales */
-.content-body hr {
-  border: 0;
-  height: 1px;
-  background: #eaeaea;
-  margin: 20px 0;
-}
-
-/* estilos seccion reseñas */
-.box {
-  background: #fff;
+/* Caja de reseñas */
+.detalle-container .box {
+  background: #1a1a2e;
   border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 12px rgba(0,255,255,0.08);
   padding: 20px;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  color: #fff;
+  margin-top: 30px;
 }
 
-.box:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 16px rgba(0,0,0,0.2);
-}
-.section-heading h3 {
-  font-family: 'Poppins', sans-serif;
+/* Título de la sección de reseñas */
+.detalle-container .section-heading h3 {
   font-size: 2rem;
-  color: #2c3e50;
+  color: #00fff7;
   text-transform: uppercase;
-  letter-spacing: 1px;
-  margin-bottom: 20px;
-  border-bottom: 2px solid #3498db;
+  border-bottom: 2px solid #00b3ff;
   padding-bottom: 10px;
 }
 
-.icontext .text h6 {
-  font-family: 'Poppins', sans-serif;
-  font-size: 1rem;
-  color: #34495e;
-  margin: 0;
-}
-
-.icontext .text .date {
-  font-size: 0.9rem;
-  color: #95a5a6;
-}
-.icontext .icon {
-  width: 50px;
-  height: 50px;
-  transition: transform 0.3s ease;
-}
-
-.icontext:hover .icon {
-  transform: scale(1.1);
-}
-
-.box p {
-  font-family: 'Roboto', sans-serif;
-  font-size: 0.95rem;
-  line-height: 1.6;
-  color: #555;
-}
-.row {
-  background: #f8f9fa; /* Un gris muy claro */
-  padding: 30px 0;
-}
-
-
 </style>
-<section class="section-content padding-y bg">
-    <div class="container">
-    
-    <!-- ============================ COMPONENT 1 ================================= -->
-    <div class="card">
-        <div class="row no-gutters">
-            <aside class="col-md-6">
-    <article class="gallery-wrap"> 
-        <div class="img-big-wrap">
-           <a href="#"><img src="{{ unico_producto.imagen.url }}"></a>
-        </div> <!-- img-big-wrap.// -->
-        
-    </article> <!-- gallery-wrap .end// -->
-    </aside>
-    <main class="col-md-6 border-left">
-    <form action="{% url 'agregar_producto_carrito' unico_producto.id %}" method="POST">
-        {% csrf_token %}
-    <article class="content-body">
-    
-    <h2 class="titulo"> {{unico_producto.nombre_producto}}</h2>
-    
-    <div class="mb-3"> 
-        <var class="price h4">${{unico_producto.precio}}</var> 
-    </div> 
-    
-    <p>{{unico_producto.descripcion}}</p>
-    
-    
-    <hr>
-        <div class="row">
-            <div class="item-option-select">
-                <h6>Elige Un Color</h6>
+  
+<section class="detalle-container">
+  <div class="container">
+    <!-- Producto -->
+    <div class="detalle-card">
+      <div class="row no-gutters">
+        <aside class="col-md-6">
+          <article class="gallery-wrap">
+            <div class="img-big-wrap">
+              <img src="{{ unico_producto.imagen.url }}">
+            </div>
+          </article>
+        </aside>
+        <main class="col-md-6 border-left">
+          <form action="{% url 'agregar_producto_carrito' unico_producto.id %}" method="POST">
+            {% csrf_token %}
+            <article class="content-body">
+              <h2 class="titulo">{{ unico_producto.nombre_producto }}</h2>
+
+              <div class="mb-3">
+                <var class="price">${{ unico_producto.precio }}</var>
+              </div>
+
+              <p>{{ unico_producto.descripcion }}</p>
+              <hr>
+
+              <div class="mb-3">
+                <h6>Elige un color</h6>
                 <select name="color" class="form-control" required>
-                    <option value="" disabled selected> Elige Un Color</option>
-                    {% for i in unico_producto.variacion_set.all %}
+                  <option value="" disabled selected>Elige un color</option>
+                  {% for i in unico_producto.variacion_set.all %}
                     {% if i.variacion_categoria == "color" %}
-                        <option value="{{ i.valor_variacion | lower }}">{{ i.valor_variacion | capfirst}}</option>
-                        {% endif %}
+                      <option value="{{ i.valor_variacion|lower }}">{{ i.valor_variacion|capfirst }}</option>
+                    {% endif %}
                   {% endfor %}
-                  
                 </select>
-            </div>
-        </div> 
-       <div class="row">
-            <div class="item-option-select">
-                <h6>Elige una Talla</h6>
-                    <select name="talla" class="form-control">
-                        <option value="" disabled selected> Elige una Talla</option>
+              </div>
 
-                        {% for i in unico_producto.variacion_set.all %}
-                        {% if i.variacion_categoria == "talla"%}
+              <div class="mb-3">
+                <h6>Elige una talla</h6>
+                <select name="talla" class="form-control" required>
+                  <option value="" disabled selected>Elige una talla</option>
+                  {% for i in unico_producto.variacion_set.all %}
+                    {% if i.variacion_categoria == "talla" %}
+                      <option value="{{ i.valor_variacion|lower }}">{{ i.valor_variacion|capfirst }}</option>
+                    {% endif %}
+                  {% endfor %}
+                </select>
+              </div>
+              <hr>
 
-                        <option value="{{ i.valor_variacion | lower}}">{{ i.valor_variacion | capfirst}}</option>
-                        {% endif %}
-                        {% endfor %}
-                     </select>
-            </div>
-        </div> 
-        <hr>
-{% if unico_producto.stock <= 0 %}
-        <h4 class='text-danger'>Im sorry se nos agoto este producto</h4>
-{% else %}
-        <button type="submit"  class=" boton_add btn  btn-primary"> <span class="text">Añadir al carrito</span> <i class="fas fa-shopping-cart"></i> </button>
-{% endif %}
-    </article>
-    </form> <!-- product-info-aside .// -->
-    </main> <!-- col.// -->
-        </div> <!-- row.// -->
-    </div> <!-- card.// -->
-    <!-- ============================ COMPONENT 1 END .// ================================= -->
-    
-    <br>
-    
-    <div class="row">
-                <div class="col-md-9">
-    
+              {% if unico_producto.stock <= 0 %}
+                <h4 class="text-danger">Lo sentimos, este producto está agotado.</h4>
+              {% else %}
+                <button type="submit" class="boton_add btn btn-primary">
+                  <span class="text">Añadir al carrito</span> <i class="fas fa-shopping-cart"></i>
+                </button>
+              {% endif %}
+            </article>
+          </form>
+        </main>
+      </div>
+    </div>
+
+    <!-- Reseñas -->
+    <div class="row mt-4">
+      <div class="col-md-9">
         <header class="section-heading">
-            <h3>Reseñas de Clientes </h3>  
-            
+          <h3>Reseñas de Clientes</h3>
         </header>
-    
+
         <article class="box mb-3">
-            <div class="icontext w-100">
-                <img src="{% static './images/avatars/avatar2.jpg' %}" class="img-xs icon rounded-circle">
-                <div class="text">
-                    <span class="date text-muted float-md-right">24.04.2020 </span>  
-                    <h6 class="mb-1"> Juan 1 </h6>
-                    
-                </div>
-            </div> <!-- icontext.// -->
-            <div class="mt-3">
-                <p>
-                    Excelente son muy Cumplidos con los Envios, Productos de 
-                    excelente Calidad
-                </p>	
+          <div class="icontext w-100 d-flex align-items-center">
+            <img src="{% static './images/avatars/avatar2.jpg' %}" class="img-xs icon rounded-circle mr-3" width="50">
+            <div class="text">
+              <span class="date text-muted float-md-right">24.04.2020</span>
+              <h6 class="mb-1">Juan 1</h6>
             </div>
+          </div>
+          <div class="mt-3">
+            <p>
+              Excelente, son muy cumplidos con los envíos. Productos de excelente calidad.
+            </p>
+          </div>
         </article>
-    
-        
-    
-        </div> <!-- col.// -->
-    </div> <!-- row.// -->
-    
-    
-    </div> <!-- container .//  -->
-    </section>
+      </div>
+    </div>
+  </div>
+</section>
 
 {% endblock %}

@@ -30,11 +30,15 @@
 <link href="{% static 'css/responsive.css' %}" rel="stylesheet" media="only screen and (max-width: 1200px)" />
 
 <style>
+	/* Tipografía moderna */
+
+	@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500;700&display=swap');
+
 	/* GENERAL */
 	body {
-	  background: radial-gradient(circle, #0f0f1b 0%, #05050a 100%);
-	  font-family: 'Orbitron', sans-serif;
-	  color: #00fff7;
+	background: radial-gradient(circle, #0f0f1b 0%, #05050a 100%);
+	font-family: 'Orbitron', sans-serif;
+	color: #00fff7;
 	}
 	
 	/* HEADER */
@@ -138,6 +142,134 @@
 	  background-color: #ff00ff;
 	  box-shadow: 0 0 5px #ff00ff;
 	}
+	@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap'); /* Fuente futurista */
+
+.section-heading-moderno {
+  background: #f0f4ff;
+  padding: 30px 20px;
+  margin-bottom: 30px;
+  border-radius: 16px;
+  box-shadow: 4px 4px 12px #c8d0e7, -4px -4px 12px #ffffff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 15px;
+}
+
+.section-titulo-moderno {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 30px;
+  color: #5c67f2;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin: 0;
+  background: linear-gradient(90deg, #5c67f2, #d06efc);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.btn-modern {
+  background: linear-gradient(135deg, #6e8efb, #a777e3);
+  color: #fff;
+  padding: 12px 24px;
+  border-radius: 10px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.btn-modern:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 20px rgba(110, 142, 251, 0.5);
+}
+
+/* Responsive */
+@media (min-width: 768px) {
+  .section-heading-moderno {
+    flex-direction: row;
+    justify-content: space-between;
+    text-align: left;
+  }
+
+  .section-titulo-moderno {
+    font-size: 36px;
+  }
+}
+.product-grid-modern {
+  margin-top: 30px;
+}
+
+/* Tarjeta */
+.product-card {
+  background: #f3f6fb;
+  border-radius: 18px;
+  box-shadow: 6px 6px 20px #c9d6ff, -6px -6px 20px #ffffff;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+.product-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 10px 25px rgba(110, 142, 251, 0.3);
+}
+
+/* Imagen */
+.product-img img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 12px;
+  object-fit: cover;
+}
+
+/* Info */
+.product-info {
+  text-align: center;
+  margin-top: 15px;
+  font-family: 'Orbitron', sans-serif;
+}
+
+.product-name {
+  font-size: 16px;
+  font-weight: bold;
+  color: #5c67f2;
+  text-decoration: none;
+  display: block;
+  margin-bottom: 5px;
+  transition: color 0.3s;
+}
+
+.product-name:hover {
+  color: #a777e3;
+}
+
+.product-price {
+  font-size: 18px;
+  color: #222;
+  margin-bottom: 10px;
+}
+
+/* Botón */
+.product-button {
+  background: linear-gradient(135deg, #6e8efb, #a777e3);
+  color: white;
+  padding: 8px 16px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 14px;
+  transition: background 0.3s ease;
+}
+
+.product-button:hover {
+  background: linear-gradient(135deg, #5c67f2, #d06efc);
+}
+
 	</style>
 
 <!-- custom javascript -->
@@ -302,26 +434,30 @@ $(document).ready(function() {
 <section class="section-name padding-y-sm">
 <div class="container">
 
-<header class="section-heading">
-	<a href="{% url 'tienda' %}" class="btn btn-outline-primary float-right">Ver Todos</a>
-	<h3 class="section-title">productos Populares</h3>
-</header><!-- sect-heading -->
-
+<header class="section-heading-moderno">
+		<h3 class="section-titulo-moderno">Productos Populares</h3>
+		<a href="{% url 'tienda' %}" class="btn-modern">Ver Todos</a>
+</header>
+	  
+	  
 	
-<div class="row">
+<div class="row product-grid-modern">
 	{% for producto in productos %}
-	<div class="col-md-3">
-		<div class="card card-product-grid">
-			<a href="{{producto.get_url }}" class="img-wrap"> <img src="{{producto.imagen.url}}"> </a>
-			<figcaption class="info-wrap">
-				<a href="{{producto.get_url }}" class="overl-btn">{{producto.nombre_producto}} </a>
-				<div class="overlay-text">Ver Detalle</div>
-				<div class="price mt-1">${{producto.precio}}</div>
-			</figcaption>
+	<div class="col-md-6 col-lg-3 mb-4">
+	  <div class="product-card">
+		<a href="{{ producto.get_url }}" class="product-img">
+		  <img src="{{ producto.imagen.url }}" alt="{{ producto.nombre_producto }}">
+		</a>
+		<div class="product-info">
+		  <a href="{{ producto.get_url }}" class="product-name">{{ producto.nombre_producto }}</a>
+		  <div class="product-price">${{ producto.precio }}</div>
+		  <a href="{{ producto.get_url }}" class="product-button">Ver Detalle</a>
 		</div>
-	</div> <!-- col.// -->
+	  </div>
+	</div>
 	{% endfor %}
-</div> 
+  </div>
+  
 
 </div>
 </section>

@@ -1,13 +1,129 @@
 {% load static %}
 
+<style>
+  /* Tipografía moderna */
 
+	@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500;700&display=swap');
+
+/* GENERAL */
+body {
+  background: radial-gradient(circle, #0f0f1b 0%, #05050a 100%);
+  font-family: 'Orbitron', sans-serif;
+  color: #00fff7;
+}
+
+/* HEADER */
+.section-header {
+  background: linear-gradient(90deg, #06060f, #101020);
+  border-bottom: 2px solid #00fff7;
+  box-shadow: 0 0 20px rgba(0, 255, 247, 0.2);
+  padding: 10px 0;
+}
+
+/* NAVBAR */
+.navbar {
+  background: transparent;
+}
+
+.nav-link {
+  color: #00fff7 !important;
+  transition: color 0.3s;
+}
+
+.nav-link:hover {
+  color: #ffffff !important;
+  text-shadow: 0 0 8px #00fff7;
+}
+
+/* LOGO */
+.logo {
+  filter: drop-shadow(0 0 5px #00fff7);
+  border-radius: 12px;
+}
+
+/* BOTONES */
+.btn-primary, .btn-outline-primary {
+  background-color: transparent;
+  color: #00fff7;
+  border: 1px solid #00fff7;
+  transition: 0.3s;
+}
+
+.btn-primary:hover, .btn-outline-primary:hover {
+  background-color: #00fff7;
+  color: #000;
+  box-shadow: 0 0 10px #00fff7;
+}
+
+/* SEARCH BAR */
+.input-group .form-control {
+  background-color: #1a1a2e;
+  color: #00fff7;
+  border: 1px solid #00fff7;
+}
+
+.input-group .btn {
+  background-color: #00fff7;
+  color: #000;
+}
+
+/* DROPDOWNS */
+.dropdown-menu {
+  background-color: #0e0e1a;
+  border: 1px solid #00fff7;
+  box-shadow: 0 0 10px #00fff7;
+}
+
+.dropdown-item {
+  color: #00fff7;
+}
+
+.dropdown-item:hover {
+  background-color: #00fff7;
+  color: #000;
+}
+
+/* ICONOS */
+.fa {
+  color: #00fff7;
+}
+
+/* WIDGET HEADER (login/registro) */
+.widget-header {
+  color: #ccc;
+}
+
+.widget-header a {
+  color: #00fff7;
+  text-decoration: none;
+}
+
+.widget-header a:hover {
+  text-shadow: 0 0 6px #00fff7;
+}
+
+/* CARRITO */
+.icon-sm {
+  background-color: #0e0e1a;
+  border: 1px solid #00fff7;
+  padding: 10px;
+}
+
+.badge-danger {
+  background-color: #ff00ff;
+  box-shadow: 0 0 5px #ff00ff;
+}
+</style>
+
+<body>
+  
 <header class="section-header">
-<nav class="navbar p-md-0 navbar-expand-sm navbar-light border-bottom">
-<div class="container">
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTop4" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+  <nav class="navbar p-md-0 navbar-expand-sm navbar-light border-bottom">
+  <div class="container">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTop4" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarTop4">
+    </button>
+    <div class="collapse navbar-collapse" id="navbarTop4">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item dropdown">
       <a href="#" class="nav-link">   English </a>
@@ -15,85 +131,86 @@
     <li class="nav-item dropdown">
       <a href="#" class="nav-link"> USD </a>
       <ul class="dropdown-menu small">
-        <li><a class="dropdown-item" href="#">EUR</a></li>
-        <li><a class="dropdown-item" href="#">AED</a></li>
-        <li><a class="dropdown-item" href="#">RUBL </a></li>
-        </ul>
+      <li><a class="dropdown-item" href="#">EUR</a></li>
+      <li><a class="dropdown-item" href="#">AED</a></li>
+      <li><a class="dropdown-item" href="#">RUBL </a></li>
+      </ul>
     </li>
     </ul>
     <ul class="navbar-nav">
     <li><a href="#" class="nav-link"> <i class="fa fa-envelope"></i> Email </a></li>
     <li><a href="#" class="nav-link"> <i class="fa fa-phone"></i> Llamanos </a></li>
-  </ul> <!-- list-inline //  -->
-  </div> <!-- navbar-collapse .// -->
-</div> <!-- container //  -->
-</nav>
-
-<section class="header-main border-bottom">
-  <div class="container">
-<div class="row align-items-center">
-  <div class="col-lg-2 col-md-3 col-6">
+    </ul> <!-- list-inline //  -->
+    </div> <!-- navbar-collapse .// -->
+  </div> <!-- container //  -->
+  </nav>
+  
+  <section class="header-main border-bottom">
+    <div class="container">
+  <div class="row align-items-center">
+    <div class="col-lg-2 col-md-3 col-6">
     <a href="{% url 'inicio' %}" class="brand-wrap">
       <img class="logo" src="{% static './images/logo3.jpg' %}">
     </a> <!-- brand-wrap.// -->
-  </div>
-  <div class="col-lg col-sm col-md col-6 flex-grow-0">
+    </div>
+    <div class="col-lg col-sm col-md col-6 flex-grow-0">
     <div class="category-wrap dropdown d-inline-block float-right">
       <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-        <i class="fa fa-bars"></i> Categorias
+      <i class="fa fa-bars"></i> Categorias
       </button>
       <div class="dropdown-menu">
-        {%  for categoria in links  %}
-          <a class="dropdown-item" href="{{ categoria.get_url }}">{{categoria.nombre_categoria}}</a>
-          {% endfor %}
+      {%  for categoria in links  %}
+        <a class="dropdown-item" href="{{ categoria.get_url }}">{{categoria.nombre_categoria}}</a>
+        {% endfor %}
       </div>
     </div>  <!-- category-wrap.// -->
-  </div> <!-- col.// -->
-  <a href="{% url 'tienda' %}" class="btn btn-outline-primary">Tienda</a>
-  <div class="col-lg  col-md-6 col-sm-12 col">
+    </div> <!-- col.// -->
+    <a href="{% url 'tienda' %}" class="btn btn-outline-primary">Tienda</a>
+    <div class="col-lg  col-md-6 col-sm-12 col">
     <form action="{% url 'buscar_producto' %}" class="search" method='GET'>
       <div class="input-group w-100">
-          <input type="text" class="form-control" style="width:60%;" placeholder="Buscar" name="keypalabra">
-
-          <div class="input-group-append">
-            <button class="btn btn-primary" type="submit">
-              <i class="fa fa-search"></i>
-            </button>
+        <input type="text" class="form-control" style="width:60%;" placeholder="Buscar" name="keypalabra">
+  
+        <div class="input-group-append">
+        <button class="btn btn-primary" type="submit">
+          <i class="fa fa-search"></i>
+        </button>
+        </div>
+      </div>
+    </form> <!-- search-wrap .end// -->
+    </div> <!-- col.// -->
+    <div class="col-lg-3 col-sm-6 col-8 order-2 order-lg-3">
+      <div class="d-flex justify-content-end mb-3 mb-lg-0">
+        {% if user.id is None %}
+        <div class="widget-header">
+          <small class="title text-muted">Bienvenido Usuario!</small>
+          <div>
+          <a href="{% url 'login' %}">Login</a> <span class="dark-transp"> | </span>
+          <a href="{% url 'registro' %}"> Registro</a>
           </div>
         </div>
-    </form> <!-- search-wrap .end// -->
-  </div> <!-- col.// -->
-  <div class="col-lg-3 col-sm-6 col-8 order-2 order-lg-3">
-        <div class="d-flex justify-content-end mb-3 mb-lg-0">
-          {% if user.id is None %}
-          <div class="widget-header">
-            <small class="title text-muted">Bienvenido Usuario!</small>
-            <div>
-              <a href="{% url 'login' %}">Login</a> <span class="dark-transp"> | </span>
-              <a href="{% url 'registro' %}"> Registro</a>
-            </div>
+        {% else %}
+        <div class="widget-header">
+          <small class="title text-muted">Bienvenido {{user.nombre}}!</small>
+          <div>
+          <a href="{% url 'dashboard_usuario' %}">Dashboard</a> <span class="dark-transp"> | </span>
+          <a href="{% url 'logout' %}"> Salir</a>
           </div>
-          {% else %}
-          <div class="widget-header">
-            <small class="title text-muted">Bienvenido {{user.nombre}}!</small>
-            <div>
-              <a href="{% url 'dashboard_usuario' %}">Dashboard</a> <span class="dark-transp"> | </span>
-              <a href="{% url 'logout' %}"> Salir</a>
-            </div>
-          </div>
-          {% endif %}
-          
-          <a href="{% url 'carrito' %}" class="widget-header pl-3 ml-3">
-            <div class="icon icon-sm rounded-circle border"><i class="fa fa-shopping-cart"></i></div>
-            <span class="badge badge-pill badge-danger notify">{{contar_carrito}}</span>
-          </a>
-        </div> <!-- widgets-wrap.// -->
+        </div>
+        {% endif %}
+       
+        <a href="{% url 'carrito' %}" class="widget-header pl-3 ml-3">
+        <div class="icon icon-sm rounded-circle border"><i class="fa fa-shopping-cart"></i></div>
+        <span class="badge badge-pill badge-danger notify">{{contar_carrito}}</span>
+        </a>
+      </div> <!-- widgets-wrap.// -->
       </div> <!-- col.// -->
-</div> <!-- row.// -->
-  </div> <!-- container.// -->
-</section> <!-- header-main .// -->
-
-
-
-
-</header> <!-- section-header.// -->
+  </div> <!-- row.// -->
+    </div> <!-- container.// -->
+  </section> <!-- header-main .// -->
+  
+  
+  
+  
+  </header> <!-- section-header.// -->
+</body>
