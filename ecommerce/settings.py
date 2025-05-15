@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'auths',
     'tienda',
     'carrito',
+    'comandos',
     #'cuentas',
 ]
 
