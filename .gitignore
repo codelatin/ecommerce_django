@@ -38,6 +38,7 @@ sdist/
 var/
 wheels/
 share/python-wheels/
+venv/
 *.egg-info/
 .installed.cfg
 *.egg
