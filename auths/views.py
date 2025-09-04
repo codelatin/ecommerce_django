@@ -11,6 +11,10 @@ from django.contrib.auth.tokens import default_token_generator
 from django.core.mail import EmailMessage, EmailMultiAlternatives
 from django.utils.html import strip_tags
 from django.http import HttpResponse
+from carrito.views import _id_carrito as _carrito_id
+from carrito.models import Carrito, Carrito_Item
+from django.core.exceptions import ObjectDoesNotExist
+
 # Create your views here.
 
 
@@ -64,14 +68,77 @@ def registro(request):
     }
     return render(request, 'cuentas/registro.html', context)
 
-
 def login(request):
     if request.method == 'POST':
-        email= request.POST['email']
-        password= request.POST['password']
+        email = request.POST['email']
+        password = request.POST['password']
 
-        user= auth.authenticate(email=email, password=password)
+        user = auth.authenticate(email=email, password=password)
         if user is not None:
+            try:
+                carrito = Carrito.objects.get(id_carrito=_carrito_id(request))
+                existe_carrito_item = Carrito_Item.objects.filter(carrito=carrito).exists()
+                print(f'Carrito encontrado: {carrito.id} - {carrito.id_carrito}')
+                if existe_carrito_item.exists():
+                    carrito_items = Carrito_Item.objects.filter(carrito=carrito)
+                    variacion_producto = []
+                    for item in carrito_items:
+                        variacion = item.variaciones.all()
+                        variacion_producto.append(list( variacion))
+                
+           
+
+                # Buscar items del carrito
+                carrito_items_sin_usuario = Carrito_Item.objects.filter(user=user)
+                listaex_variacion_producto = []
+                id = []
+                for item in carrito_items:
+                    existe_variacion = item.variaciones.all()
+                    listaex_variacion_producto.append(list(existe_variacion))
+                    id.append(item.id)
+                
+                for product in variacion_producto:
+                    if product in listaex_variacion_producto:
+                        index = listaex_variacion_producto.index(product)
+                        item_id = id[index]
+                        item = Carrito_Item.objects.get(id=item_id)
+                        item.cantidad += 1
+                        item.save()
+                    else:
+                        print('=== ASIGNANDO USUARIO A LOS ITEMS ===')
+                        for item in carrito_items:
+                          
+                            item.user = user
+                            item.save()
+                            
+                       
+                    
+                
+                if carrito_items_sin_usuario.exists():
+                    print('=== ASIGNANDO USUARIO A LOS ITEMS ===')
+                    for item in carrito_items_sin_usuario:
+                        print(f'Procesando item ID: {item.id} - Producto: {item.producto}')
+                        print(f'Usuario antes: {item.user}')
+                        item.user = user
+                        item.save()
+                        print(f'Usuario después: {item.user}')
+                        print('---')
+                    
+                    print(f'✅ Se asignaron {carrito_items_sin_usuario.count()} items al usuario {user.email}')
+                else:
+                    print('❌ No se encontraron items sin usuario para asignar')
+                    
+                # Verificación final
+                items_con_usuario = Carrito_Item.objects.filter(carrito=carrito, user=user)
+                print(f'✅ Items finales con usuario {user.email}: {items_con_usuario.count()}')
+                
+            except Carrito.DoesNotExist:
+                print('❌ No se encontró el carrito en la base de datos')
+            except Exception as e:
+                print(f'❌ Error inesperado: {str(e)}')
+                import traceback
+                print(traceback.format_exc()) #vamos Excelente con Este Proyecto!
+                
             auth.login(request, user)
             messages.success(request, 'Te has logeado Perfectamente!')
             return redirect('dashboard_usuario')

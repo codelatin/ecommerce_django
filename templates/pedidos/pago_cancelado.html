@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pago Cancelado</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #ff7e5f 0%, #feb47b 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .cancel-container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            width: 100%;
+            overflow: hidden;
+            animation: shake 0.8s ease-out;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        .cancel-header {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a52);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+            position: relative;
+        }
+
+        .cancel-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        .cancel-title {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .cancel-subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .cancel-content {
+            padding: 40px 30px;
+            text-align: center;
+        }
+
+        .message {
+            font-size: 1.1rem;
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        .order-info {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .order-info h4 {
+            color: #856404;
+            margin-bottom: 10px;
+        }
+
+        .order-info p {
+            color: #856404;
+            margin: 5px 0;
+        }
+
+        .reasons {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 10px;
+            margin: 20px 0;
+            text-align: left;
+        }
+
+        .reasons h4 {
+            color: #333;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .reasons h4 i {
+            margin-right: 10px;
+            color: #ff6b6b;
+        }
+
+        .reasons ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .reasons li {
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+        }
+
+        .reasons li:last-child {
+            border-bottom: none;
+        }
+
+        .reasons li i {
+            margin-right: 10px;
+            color: #ff6b6b;
+            width: 20px;
+        }
+
+        .actions {
+            padding: 30px;
+            text-align: center;
+            background: #f8f9fa;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 15px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            min-width: 150px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, #2196F3, #1976D2);
+            color: white;
+        }
+
+        .btn-warning {
+            background: linear-gradient(135deg, #FF9800, #F57C00);
+            color: white;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .help-section {
+            background: #e3f2fd;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .help-section h4 {
+            color: #1976d2;
+            margin-bottom: 10px;
+        }
+
+        .help-section p {
+            color: #1565c0;
+            line-height: 1.5;
+        }
+
+        .floating-elements {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .floating-element {
+            position: absolute;
+            opacity: 0.1;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+
+        @media (max-width: 768px) {
+            .cancel-title {
+                font-size: 2rem;
+            }
+            
+            .actions {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="cancel-container">
+        <div class="floating-elements">
+            <i class="fas fa-times floating-element" style="top: 20%; left: 10%; font-size: 2rem;"></i>
+            <i class="fas fa-credit-card floating-element" style="top: 60%; right: 10%; font-size: 1.5rem;"></i>
+            <i class="fas fa-exclamation floating-element" style="top: 40%; left: 20%; font-size: 1.8rem;"></i>
+        </div>
+
+        <div class="cancel-header">
+            <div class="cancel-icon">
+                <i class="fas fa-times-circle"></i>
+            </div>
+            <h1 class="cancel-title">Pago Cancelado</h1>
+            <p class="cancel-subtitle">Tu transacción no se ha completado</p>
+        </div>
+
+        <div class="cancel-content">
+            <p class="message">
+                No te preocupes, tu pedido aún está guardado y no se ha realizado ningún cargo a tu cuenta. 
+                Puedes intentar el pago nuevamente cuando gustes.
+            </p>
+
+            {% if pedido %}
+            <div class="order-info">
+                <h4><i class="fas fa-shopping-bag" style="margin-right: 10px;"></i>Tu Pedido</h4>
+                <p><strong>Número:</strong> #{{ pedido.numero_pedido }}</p>
+                <p><strong>Total:</strong> ${{ pedido.total_pedido|floatformat:2 }}</p>
+                <p><strong>Estado:</strong> Pendiente de pago</p>
+            </div>
+            {% endif %}
+
+            <div class="reasons">
+                <h4><i class="fas fa-question-circle"></i>Posibles razones de la cancelación:</h4>
+                <ul>
+                    <li><i class="fas fa-user"></i>Decidiste no continuar con la compra</li>
+                    <li><i class="fas fa-wifi"></i>Problemas de conexión a internet</li>
+                    <li><i class="fas fa-credit-card"></i>Información de pago incorrecta</li>
+                    <li><i class="fas fa-lock"></i>Dudas sobre la seguridad del sitio</li>
+                    <li><i class="fas fa-clock"></i>Se agotó el tiempo de la sesión</li>
+                </ul>
+            </div>
+
+            <div class="help-section">
+                <h4><i class="fas fa-headset" style="margin-right: 10px;"></i>¿Necesitas ayuda?</h4>
+                <p>
+                    Si experimentaste algún problema durante el proceso de pago, nuestro equipo de soporte 
+                    está aquí para ayudarte. Contáctanos y resolveremos cualquier inconveniente.
+                </p>
+            </div>
+        </div>
+
+        <div class="actions">
+            <a href="{% url 'realizar_pedido' %}" class="btn btn-primary">
+                <i class="fas fa-redo" style="margin-right: 8px;"></i>
+                Intentar Pago
+            </a>
+            <a href="{% url 'carrito' %}" class="btn btn-warning">
+                <i class="fas fa-shopping-cart" style="margin-right: 8px;"></i>
+                Ver Carrito
+            </a>
+            <a href="{% url 'tienda' %}" class="btn btn-secondary">
+                <i class="fas fa-store" style="margin-right: 8px;"></i>
+                Seguir Comprando
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // Animación de elementos flotantes
+        document.querySelectorAll('.floating-element').forEach((element, index) => {
+            element.style.animationDelay = (index * 2) + 's';
+        });
+
+        // Mostrar mensaje de apoyo después de 3 segundos
+        setTimeout(() => {
+            const supportMessage = document.createElement('div');
+            supportMessage.style.cssText = `
+                position: fixed;
+                bottom: 20px;
+                right: 20px;
+                background: #4CAF50;
+                color: white;
+                padding: 15px 20px;
+                border-radius: 50px;
+                box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+                animation: slideInRight 0.5s ease-out;
+                z-index: 1000;
+                cursor: pointer;
+            `;
+            supportMessage.innerHTML = `
+                <i class="fas fa-comment" style="margin-right: 10px;"></i>
+                ¿Te ayudamos? 💬
+            `;
+            
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes slideInRight {
+                    from { transform: translateX(100%); opacity: 0; }
+                    to { transform: translateX(0); opacity: 1; }
+                }
+            `;
+            document.head.appendChild(style);
+            document.body.appendChild(supportMessage);
+            
+            // Remover el mensaje después de 5 segundos
+            setTimeout(() => {
+                supportMessage.remove();
+            }, 5000);
+            
+            // Opcional: agregar funcionalidad al click
+            supportMessage.addEventListener('click', () => {
+                alert('¡Contáctanos en soporte@tutienda.com o llama al +1-234-567-890!');
+            });
+        }, 3000);
+    </script>
+</body>
+</html>

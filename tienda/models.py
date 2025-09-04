@@ -35,13 +35,33 @@ eleccion_variacion_categoria =(
 )
 
 class Variacion(models.Model):
-    producto=models.ForeignKey(Producto, on_delete=models.CASCADE)
-    variacion_categoria=models.CharField(max_length=100, choices=eleccion_variacion_categoria)
-    valor_variacion=models.CharField(max_length=100)
-    is_active=models.BooleanField(default=True)
-    fecha_creacion=models.DateTimeField(auto_now=True)
+    producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
+    variacion_categoria = models.CharField(max_length=100, choices=eleccion_variacion_categoria)
+    valor_variacion = models.CharField(max_length=100)
+    is_active = models.BooleanField(default=True)
+    fecha_creacion = models.DateTimeField(auto_now=True)
 
-    objects=VariacionManager()
+    objects = VariacionManager()
 
-    def __unicode__(self):
-        return self.producto
+    def __str__(self):
+        return f"{self.producto.nombre_producto} - {self.variacion_categoria}: {self.valor_variacion}"
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

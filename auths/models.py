@@ -36,7 +36,8 @@ class Auth(AbstractBaseUser, PermissionsMixin):  # Agrega PermissionsMixin
     apellido= models.CharField(max_length=50)
     username= models.CharField(max_length=50, unique=True)
     email= models.EmailField(max_length=100, unique=True)
-    telefono= models.CharField(max_length=50, default="sin Numero")
+    telefono = models.CharField(max_length=15, blank=True, null=True)
+
 
     # requeridos
     fecha_registro = models.DateTimeField(auto_now_add=True)

@@ -43,6 +43,10 @@ INSTALLED_APPS = [
     'auths',
     'tienda',
     'carrito',
+    'api',
+    'rest_framework',
+    'pedidos',
+    'paypal.standard.ipn',
     #'cuentas',
 ]
 
@@ -121,7 +125,7 @@ USE_I18N = True
 
 USE_TZ = True
 
-
+#UN SALUDO DEVS HASTAB PRONTO!
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
@@ -167,3 +171,7 @@ JAZZMIN_SETTINGS = {
     "theme": "solar",  # Solo define un theme
     "dark_mode_theme": "superhero",
 }
+
+#ajustes para paypal
+PAYPAL_TEST=True
+PAYPAL_RECEIVER_EMAIL= 'personalcodelatin@gmail.com'

@@ -1,11 +1,13 @@
 from django.shortcuts import render,get_object_or_404
-from .models import Producto
+from .models import Producto,Variacion
 from categorias.models import Categoria
 from carrito.views import _id_carrito
 from django.http import HttpResponse
 from carrito.models import Carrito_Item
 from django.core.paginator import EmptyPage,PageNotAnInteger, Paginator
 from django.db.models import Q
+from .serializers import ProductoSerializer, VariacionSerializer
+from rest_framework import viewsets
 
 # Create your views here.
 def tienda(request, categoria_slug=None):
@@ -95,3 +97,12 @@ def detalle_producto(request, categoria_slug, producto_slug):
         'esta_encarrito': esta_encarrito
     }
     return render(request, 'tienda/detalle_producto.html', context)
+
+
+class ProductoViewSet(viewsets.ReadOnlyModelViewSet):  # Solo lectura
+    queryset = Producto.objects.all()
+    serializer_class = ProductoSerializer
+
+class VariacionViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = Variacion.objects.all()
+    serializer_class = VariacionSerializer

@@ -8,9 +8,12 @@ def contador_carrito(request):
     else:
         try:
             carrito= Carrito.objects.filter(id_carrito=_id_carrito(request))
-            carrito_items=Carrito_Item.objects.all().filter(carrito=carrito[:1])
+            if request.user.is_authenticated:
+                carrito_items= Carrito_Item.objects.all().filter(user=request.user)
+            else: 
+                carrito_items=Carrito_Item.objects.all().filter(carrito=carrito[:1])
             for carrito_item in carrito_items:
                 contar_carrito += carrito_item.cantidad 
         except Carrito.DoesNotExist:
             contar_carrito=0
-    return dict(contar_carrito=contar_carrito)
+    return dict(contar_carrito=contar_carrito) 

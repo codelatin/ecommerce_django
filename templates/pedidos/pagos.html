@@ -1,0 +1,794 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<style>
+    /* Estilos generales para la sección del carrito */
+.section-content {
+  background: radial-gradient(circle, #0f0f1b 0%, #05050a 100%);
+  padding: 40px 15px;
+}
+
+/* Tarjeta principal del carrito */
+.card {
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  margin-bottom: 30px;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* NUEVOS ESTILOS PARA LOS TÍTULOS DE TARJETAS */
+.card .card-title {
+    color: #1a252f; /* Color más oscuro y elegante */
+    font-weight: 700;
+    font-size: 1.3rem;
+    margin: -20px -20px 25px -20px;
+    padding: 18px 25px;
+    background: linear-gradient(135deg, #f8f9fc 0%, #eef2f7 100%);
+    border-radius: 12px 12px 0 0;
+    border-left: 5px solid #e74c3c; /* Acento rojo elegante */
+    position: relative;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+    letter-spacing: -0.3px;
+}
+
+.card .card-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, #e74c3c, transparent);
+    opacity: 0.6;
+}
+
+.card .card-title i {
+    color: #e74c3c;
+    margin-right: 10px;
+    font-size: 1.1rem;
+}
+
+/* Efecto hover para los títulos */
+.card:hover .card-title {
+    color: #c0392b;
+    transform: translateY(-2px);
+}
+
+/* Tabla del carrito */
+.table-shopping-cart {
+  width: 100%;
+  margin-bottom: 0;
+}
+
+.table-shopping-cart thead tr {
+  background-color: #3498db;
+  color: #fff;
+  text-transform: uppercase;
+  font-size: 0.9rem;
+}
+
+.table-shopping-cart tbody tr {
+  border-bottom: 1px solid #eaeaea;
+}
+
+/* Estilos para el input group (cantidad) */
+.input-group.input-spinner {
+  max-width: 120px;
+  margin: 0 auto;
+}
+
+.input-group-prepend .btn,
+.input-group-append .btn {
+  background-color: #f1f1f1;
+  border: none;
+  transition: background-color 0.3s ease;
+}
+
+.input-group-prepend .btn:hover,
+.input-group-append .btn:hover {
+  background-color: #e0e0e0;
+}
+
+/* Campo de cantidad */
+.input-group .form-control {
+  text-align: center;
+  border: 1px solid #ccc;
+  border-left: none;
+  border-right: none;
+}
+
+/* NUEVO ESTILO PARA EL BOTÓN ELIMINAR */
+.btn-delete-modern {
+    background: linear-gradient(45deg, #ff6b6b, #ee5a52);
+    border: none;
+    border-radius: 8px;
+    color: white;
+    padding: 8px 16px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-delete-modern:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(255, 107, 107, 0.4);
+    background: linear-gradient(45deg, #ff5252, #d32f2f);
+    color: white;
+    text-decoration: none;
+}
+
+.btn-delete-modern:active {
+    transform: translateY(0);
+}
+
+.btn-delete-modern::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    transform: translate(-50%, -50%);
+}
+
+.btn-delete-modern:hover::before {
+    width: 300px;
+    height: 300px;
+}
+
+/* MODAL PERSONALIZADO */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(5px);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+}
+
+.modal-content {
+    background: white;
+    border-radius: 20px;
+    padding: 30px;
+    max-width: 400px;
+    width: 90%;
+    text-align: center;
+    position: relative;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+.modal-icon {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 20px;
+    background: linear-gradient(45deg, #ff6b6b, #ee5a52);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    color: white;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.modal-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 15px;
+    color: #2c3e50;
+}
+
+.modal-message {
+    color: #666;
+    margin-bottom: 30px;
+    line-height: 1.5;
+}
+
+.modal-buttons {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.btn-confirm, .btn-cancel {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.95rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-confirm {
+    background: linear-gradient(45deg, #ff6b6b, #ee5a52);
+    color: white;
+}
+
+.btn-confirm:hover {
+    background: linear-gradient(45deg, #ff5252, #d32f2f);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+}
+
+.btn-cancel {
+    background: #f8f9fa;
+    color: #666;
+    border: 1px solid #ddd;
+}
+
+.btn-cancel:hover {
+    background: #e9ecef;
+    transform: translateY(-2px);
+}
+
+/* Animación de entrada del modal */
+.modal-content.show {
+    animation: modalSlideIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes modalSlideIn {
+    from {
+        opacity: 0;
+        transform: scale(0.7) translateY(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+/* Resumen del carrito (aside) */
+aside.col-lg-4 .card {
+  background: linear-gradient(135deg, #f6f9fc, #e9eff5);
+  border: none;
+  border-radius: 12px;
+  padding: 0;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+aside.col-lg-4 .card .card-title {
+    color: #1a252f;
+    font-weight: 700;
+    font-size: 1.25rem;
+    margin: 0 0 25px 0;
+    padding: 20px 25px;
+    background: linear-gradient(135deg, #34495e, #2c3e50);
+    color: #ffffff;
+    border-radius: 12px 12px 0 0;
+    border: none;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+}
+
+aside.col-lg-4 .card .card-title::after {
+    display: none;
+}
+
+aside.col-lg-4 .card-body {
+    padding: 25px;
+}
+
+aside.col-lg-4 .card-body dl {
+  margin-bottom: 15px;
+}
+
+aside.col-lg-4 .card-body dl dt {
+  font-weight: bold;
+  font-size: 1rem;
+  color: #2c3e50;
+}
+
+aside.col-lg-4 .card-body dl dd {
+  font-size: 1.1rem;
+  text-align: right;
+  color: #34495e;
+}
+
+/* Botones en el resumen */
+aside.col-lg-4 .card-body .btn-success {
+  background-color: #27ae60;
+  border: none;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  font-weight: 500;
+  padding: 12px;
+}
+
+aside.col-lg-4 .card-body .btn-success:hover {
+  background-color: #1e8449;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(39, 174, 96, 0.3);
+}
+
+aside.col-lg-4 .card-body .btn-primary {
+  background-color: #2980B9;
+  border: none;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  font-weight: 500;
+  padding: 12px;
+}
+
+aside.col-lg-4 .card-body .btn-primary:hover {
+  background-color: #1f6391;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(41, 128, 185, 0.3);
+}
+
+/* Paginación */
+.pagination .page-link {
+  border: none;
+  background-color: #fff;
+  color: #2980B9;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.pagination .page-link:hover {
+  background-color: #e9ecef;
+  transform: scale(1.05);
+}
+
+.pagination .page-item.active .page-link {
+  background-color: #2980B9;
+  color: #fff;
+}
+
+/* Notificación de éxito */
+.success-notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: linear-gradient(45deg, #4CAF50, #45a049);
+    color: white;
+    padding: 15px 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    z-index: 10001;
+    animation: slideInRight 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+@keyframes slideInRight {
+    from { transform: translateX(100%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+/* Estilos adicionales para mejor apariencia */
+.alert-info {
+    background: linear-gradient(135deg, #d1ecf1, #bee5eb);
+    border: 1px solid #b8daff;
+    border-left: 4px solid #17a2b8;
+    color: #0c5460;
+}
+
+.text-warning {
+    color: #e67e22 !important;
+}
+
+.text-muted {
+    color: #7f8c8d !important;
+}
+
+/* Responsive para móviles */
+@media (max-width: 768px) {
+    .modal-buttons {
+        flex-direction: column;
+    }
+    
+    .btn-confirm, .btn-cancel {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .modal-content {
+        margin: 20px;
+        width: calc(100% - 40px);
+    }
+    
+    .card .card-title {
+        font-size: 1.2rem;
+        margin: -15px -15px 20px -15px;
+        padding: 15px 20px;
+    }
+    
+    aside.col-lg-4 .card .card-title {
+        font-size: 1.1rem;
+        padding: 15px 20px;
+    }
+}
+
+/* Mejoras adicionales para mejor UX */
+.itemside .aside img {
+    border-radius: 6px;
+    transition: transform 0.3s ease;
+}
+
+.itemside:hover .aside img {
+    transform: scale(1.05);
+}
+
+.title.text-dark {
+    color: #2c3e50 !important;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.title.text-dark:hover {
+    color: #e74c3c !important;
+    text-decoration: none;
+}
+
+.price {
+    color: #27ae60;
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+.table-shopping-cart tbody tr:hover {
+    background-color: rgba(52, 152, 219, 0.05);
+    transition: background-color 0.3s ease;
+}
+p{
+    color: #1a252f; /* Color más oscuro y elegante */
+
+}
+<style>
+#paypal-button-container {
+    min-height: 100px;
+    margin: 20px 0;
+}
+
+#paypal-button-container .alert {
+    margin: 0;
+}
+
+/* Estilo para el estado de carga */
+#paypal-loading {
+    color: #6c757d;
+}
+
+#paypal-loading i {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+}
+
+/* Responsividad para móviles */
+@media (max-width: 768px) {
+    #paypal-button-container {
+        padding: 0 10px;
+    }
+}
+</style>
+
+<section class="section-content padding-y bg">
+    <div class="container">
+        <div class="row">
+            <aside class="col-lg-8">
+                
+                <!-- DIRECCIÓN DE ENVÍO -->
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            
+                           🚚 Dirección de Envío
+                        </h5>
+                        <p><strong>Nombre:{{ pedido.nombre }} {{ pedido.apellido }}</strong></p>
+                        {% if pedido.telefono %}
+                        <p></i> <strong>📞Teléfono:</strong> {{ pedido.telefono }}</p>
+                        {% endif %}
+                        <p>📍 Direccion</i> {{ pedido.direccion }}</p>
+                        <p> 🏘️{{ pedido.ciudad }}, 🌍 {{ pedido.pais }}</p>
+                            
+                            <!-- Observación del pedido -->
+
+                        {% if pedido.observacion_pedido %}
+                        <div class="alert alert-info mt-3">
+                            <strong><i class="fa fa-info-circle"></i> Observación del Pedido:</strong><br>
+                            {{   pedido.observacion_pedido }}
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+                
+                <!-- MÉTODO DE PAGO -->
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <i class="fa fa-credit-card"></i>
+                            Método de Pago
+                        </h5>
+                        {% if pedido.pago %}
+                            <p><i class="fa fa-credit-card"></i> {{ pedido.pago.metodo_pago|default:"Por confirmar" }}</p>
+                            <p><small class="text-muted">Estado: {{ pedido.pago.estado|default:"Pendiente" }}</small></p>
+                        {% else %}
+                            <p class="text-warning"><i class="fa fa-exclamation-triangle"></i> Método de pago por confirmar</p>
+                        {% endif %}
+                    </div>
+                </div>
+                
+                <!-- REVISAR PRODUCTOS -->
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <i class="fa fa-shopping-cart"></i>
+                            Revisar Productos
+                        </h5>
+                        
+                        <table class="table table-borderless table-shopping-cart">
+                            <thead class="text-muted">
+                                <tr class="small text-uppercase">
+                                    <th scope="col">Producto</th>
+                                    <th scope="col" width="120">Cantidad</th>
+                                    <th scope="col" width="120">Precio</th>
+                                    <th scope="col" class="text-right" width="200"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for carrito_item in carrito_items %}
+                                <tr>  
+                                    <td>
+                                        <figure class="itemside align-items-center">
+                                            <div class="aside">
+                                                <img src="{{ carrito_item.producto.imagen.url }}" class="img-sm" alt="{{ carrito_item.producto.nombre_producto }}">
+                                            </div>
+                                            <figcaption class="info">
+                                                <a href="{{ carrito_item.producto.get_url }}" class="title text-dark">{{ carrito_item.producto.nombre_producto }}</a>
+                                                <p class="text-muted small">
+                                                    {% if carrito_item.variaciones.all %}
+                                                        {% for item in carrito_item.variaciones.all %}
+                                                            {{ item.variacion_categoria|capfirst }} : {{ item.valor_variacion|capfirst }}<br>
+                                                        {% endfor %}
+                                                    {% endif %} 
+                                                </p>
+                                            </figcaption>
+                                        </figure>
+                                    </td>
+                                    <td> 
+                                        <div class="col"> 
+                                            <div class="input-group input-spinner">
+                                                <div class="input-group-prepend">
+                                                    <a href="{% url 'disminuir_cantidad_producto' carrito_item.producto.id carrito_item.id %}" class="btn btn-light" type="button"> 
+                                                        <i class="fa fa-minus"></i> 
+                                                    </a>
+                                                </div>
+                                                <input type="text" class="form-control" value="{{ carrito_item.cantidad }}" readonly>
+                                                <div class="input-group-append">
+                                                    <form style="display: inline;">
+                                                        {% csrf_token %}
+                                                        {% for item in carrito_item.variaciones.all %}
+                                                        <input type="hidden" name="{{ item.variacion_categoria|lower }}" value="{{ item.valor_variacion|capfirst }}">
+                                                        {% endfor %}
+                                                        <a href="{% url 'aumentar_cantidad_producto' carrito_item.producto.id carrito_item.id %}" class="btn btn-light">
+                                                            <i class="fa fa-plus"></i>
+                                                        </a>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td> 
+                                        <div class="price-wrap"> 
+                                            <var class="price">${{ carrito_item.sub_total }}</var> 
+                                            <small class="text-muted">${{ carrito_item.producto.precio }}</small> 
+                                        </div>
+                                    </td>
+                                    <td class="text-right"> 
+                                        <button class="btn-delete-modern" onclick="showDeleteModal('{{ carrito_item.producto.nombre_producto }}', '{% url 'eliminar_producto_carrito' carrito_item.producto.id carrito_item.id %}')">
+                                            <i class="fa fa-trash-alt"></i>
+                                            Eliminar
+                                        </button>
+                                    </td>
+                                </tr>
+                                {% empty %}
+                                <tr>
+                                    <td colspan="4" class="text-center">
+                                        <p class="text-muted">No hay productos en el carrito</p>
+                                        <a href="{% url 'tienda' %}" class="btn btn-primary">Ir a la tienda</a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+            </aside>
+            
+            <!-- RESUMEN DEL PEDIDO -->
+            <aside class="col-lg-4">
+                <div class="card">
+                    <h5 class="card-title">
+                        <i class="fa fa-receipt"></i>
+                        Resumen del Pedido
+                    </h5>
+                    <div class="card-body">
+                        
+                        <dl class="dlist-align">
+                            <dt>Precio Total:</dt>
+                            <dd class="text-right">${{ total }}</dd>
+                        </dl>
+                        <dl class="dlist-align">
+                            <dt>IVA:</dt>
+                            <dd class="text-right">${{ iva }}</dd>
+                        </dl>
+                        <dl class="dlist-align">
+                            <dt>Total a Pagar:</dt>
+                            <dd class="text-right text-dark"><strong>${{ total_pagar }}</strong></dd>
+                        </dl>
+                        
+                        <hr>
+                        
+                        <p class="text-center mb-3">
+                            <img src="{% static './images/misc/payments.png' %}" height="26" alt="Métodos de pago">
+                        </p>
+                        <div class="paypal-container">
+                            <h3>Pagar con PayPal</h3>
+                            {{ paypal_form.render }}
+                        </div>
+                     <a href="{% url 'tienda' %}" class="btn btn-primary btn-block">Continuar Comprando!</a>
+                       
+                    </div>
+                </div>
+            </aside>
+            
+        </div>
+    </div>
+</section>
+
+<!-- MODAL PERSONALIZADO PARA CONFIRMACIÓN DE ELIMINACIÓN -->
+<div class="modal-overlay" id="deleteModal">
+    <div class="modal-content">
+        <div class="modal-icon">
+            <i class="fa fa-exclamation-triangle"></i>
+        </div>
+        <h2 class="modal-title">¿Eliminar producto?</h2>
+        <p class="modal-message" id="modalMessage">
+            ¿Estás seguro que deseas eliminar este producto del carrito?
+        </p>
+        <div class="modal-buttons">
+            <button class="btn-confirm" onclick="confirmDelete()">
+                <i class="fa fa-trash-alt"></i>
+                Sí, eliminar
+            </button>
+            <button class="btn-cancel" onclick="closeModal()">
+                <i class="fa fa-times"></i>
+                Cancelar
+            </button>
+        </div>
+    </div>
+</div>
+<!-- script para paypal-->
+<script src="https://www.paypal.com/sdk/js?client-id=AZg2DsvvYPW7VbUXnRnRWQnyS2NWSjXWyVZcacwtiDCDovFzXqkiXFfeYG0jTXEy2LUrVNzZ1-du3Elz&currency=USD"></script>
+<script>
+    paypal.Buttons({
+        createOrder: function(data, actions) {
+            return actions.order.create({
+                purchase_units: [{
+                    amount: {
+                        value: '{{ total_pagar|stringformat:".2f" }}'
+                    }
+                }]
+            });
+        },
+        onApprove: function(data, actions) {
+            return actions.order.capture().then(function(details) {
+                alert('✅ Pago realizado por ' + details.payer.name.given_name);
+            });
+        }
+    }).render('#paypal-button-container');
+</script>
+
+
+<!-- JAVASCRIPT PARA EL MODAL -->
+<script>
+
+let currentDeleteUrl = '';
+
+function showDeleteModal(productName, deleteUrl) {
+    const modal = document.getElementById('deleteModal');
+    const message = document.getElementById('modalMessage');
+    const modalContent = modal.querySelector('.modal-content');
+    
+    currentDeleteUrl = deleteUrl;
+    message.innerHTML = `¿Estás seguro que deseas eliminar <strong>"${productName}"</strong> del carrito?<br><small>Esta acción no se puede deshacer.</small>`;
+    
+    modal.style.display = 'flex';
+    modalContent.classList.add('show');
+    
+    document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+    const modal = document.getElementById('deleteModal');
+    const modalContent = modal.querySelector('.modal-content');
+    
+    modalContent.classList.remove('show');
+    
+    setTimeout(() => {
+        modal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+    }, 300);
+}
+
+function confirmDelete() {
+    if (currentDeleteUrl) {
+        showSuccessMessage();
+        
+        setTimeout(() => {
+            window.location.href = currentDeleteUrl;
+        }, 500);
+    }
+}
+
+function showSuccessMessage() {
+    const notification = document.createElement('div');
+    notification.className = 'success-notification';
+    notification.innerHTML = `
+        <i class="fa fa-check-circle"></i>
+        Eliminando producto...
+    `;
+    
+    document.body.appendChild(notification);
+    
+    setTimeout(() => {
+        if (notification.parentNode) {
+            notification.remove();
+        }
+    }, 3000);
+}
+
+// Cerrar modal al hacer click fuera
+document.getElementById('deleteModal').addEventListener('click', function(e) {
+    if (e.target === this) {
+        closeModal();
+    }
+});
+
+// Cerrar modal con tecla Escape
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        closeModal();
+    }
+});
+
+// Prevenir que el modal se cierre al hacer click dentro del contenido
+document.querySelector('.modal-content').addEventListener('click', function(e) {
+    e.stopPropagation();
+});
+</script>
+
+{% endblock %}

@@ -150,7 +150,8 @@ aside.col-lg-3 .card-body .btn-primary:hover {
 
     <div class="card-body">
         <h4 class="card-title mb-4">Direcciòn de envio</h4>
-        <form action="">
+        <form action="{% url 'realizar_pedido' %}" method="post">
+            {% csrf_token %}
             <div class="form-row">
                 <div class="col form-group">
                     <label for="">Nombre</label>
@@ -196,7 +197,7 @@ aside.col-lg-3 .card-body .btn-primary:hover {
                     <label for="">Mensaje del pedido</label>
                     <textarea name="mensaje_pedido" rows="2" class="form-control"></textarea>
                 </div>
-        </form>
+        
     </div>
     </div> <!-- card.// -->
     
@@ -247,11 +248,11 @@ aside.col-lg-3 .card-body .btn-primary:hover {
                     </tbody>
                     </table>
                     
-                
-                <a href="./place-order.html" class="btn btn-success btn-block"> realizar pedido </a>
+                <button type="submit" name="submit" class="btn-primary btn-block">Realizar Pedido</button>
                 <a href="{% url 'tienda' %}" class="btn btn-primary btn-block">Continuar Comprando!</a>
             </div> <!-- card-body.// -->
             </div> <!-- card.// -->
+            </form>
     
     </aside> <!-- col.// -->
     

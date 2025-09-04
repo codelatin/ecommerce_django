@@ -6,7 +6,6 @@
     /* Estilos generales para la sección del carrito */
 .section-content {
   background: radial-gradient(circle, #0f0f1b 0%, #05050a 100%);
-
   padding: 40px 15px;
 }
 
@@ -68,7 +67,8 @@
   border-right: none;
 }
 
-/* Enlace de eliminar producto */
+/* Enlace de eliminar producto - ESTILO ANTERIOR (comentado para referencia) */
+/*
 .btn.btn-danger {
   border-radius: 4px;
   transition: background-color 0.3s ease;
@@ -76,6 +76,173 @@
 
 .btn.btn-danger:hover {
   background-color: #c0392b;
+}
+*/
+
+/* NUEVO ESTILO PARA EL BOTÓN ELIMINAR */
+.btn-delete-modern {
+    background: linear-gradient(45deg, #ff6b6b, #ee5a52);
+    border: none;
+    border-radius: 8px;
+    color: white;
+    padding: 8px 16px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-delete-modern:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(255, 107, 107, 0.4);
+    background: linear-gradient(45deg, #ff5252, #d32f2f);
+    color: white;
+    text-decoration: none;
+}
+
+.btn-delete-modern:active {
+    transform: translateY(0);
+}
+
+.btn-delete-modern::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    transform: translate(-50%, -50%);
+}
+
+.btn-delete-modern:hover::before {
+    width: 300px;
+    height: 300px;
+}
+
+/* MODAL PERSONALIZADO */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(5px);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+}
+
+.modal-content {
+    background: white;
+    border-radius: 20px;
+    padding: 30px;
+    max-width: 400px;
+    width: 90%;
+    text-align: center;
+    position: relative;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+.modal-icon {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 20px;
+    background: linear-gradient(45deg, #ff6b6b, #ee5a52);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    color: white;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.modal-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 15px;
+    color: #2c3e50;
+}
+
+.modal-message {
+    color: #666;
+    margin-bottom: 30px;
+    line-height: 1.5;
+}
+
+.modal-buttons {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.btn-confirm, .btn-cancel {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.95rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-confirm {
+    background: linear-gradient(45deg, #ff6b6b, #ee5a52);
+    color: white;
+}
+
+.btn-confirm:hover {
+    background: linear-gradient(45deg, #ff5252, #d32f2f);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+}
+
+.btn-cancel {
+    background: #f8f9fa;
+    color: #666;
+    border: 1px solid #ddd;
+}
+
+.btn-cancel:hover {
+    background: #e9ecef;
+    transform: translateY(-2px);
+}
+
+/* Animación de entrada del modal */
+.modal-content.show {
+    animation: modalSlideIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes modalSlideIn {
+    from {
+        opacity: 0;
+        transform: scale(0.7) translateY(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
 }
 
 /* Resumen del carrito (aside) */
@@ -144,7 +311,46 @@ aside.col-lg-3 .card-body .btn-primary:hover {
   color: #fff;
 }
 
+/* Notificación de éxito */
+.success-notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: linear-gradient(45deg, #4CAF50, #45a049);
+    color: white;
+    padding: 15px 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    z-index: 10001;
+    animation: slideInRight 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+@keyframes slideInRight {
+    from { transform: translateX(100%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+/* Responsive para móviles */
+@media (max-width: 768px) {
+    .modal-buttons {
+        flex-direction: column;
+    }
+    
+    .btn-confirm, .btn-cancel {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .modal-content {
+        margin: 20px;
+        width: calc(100% - 40px);
+    }
+}
 </style>
+
 <section class="section-content padding-y bg">
     <div class="container">
     
@@ -216,7 +422,11 @@ aside.col-lg-3 .card-body .btn-primary:hover {
             </div> <!-- price-wrap .// -->
         </td>
         <td class="text-right"> 
-        <a href="{% url 'eliminar_producto_carrito' carrito_item.producto.id carrito_item.id %}" onclick="return confirm('Realmente deseas eliminar este Producto?')" class="btn btn-danger"> Eliminar</a>
+        <!-- BOTÓN ELIMINAR MEJORADO -->
+        <button class="btn-delete-modern" onclick="showDeleteModal('{{ carrito_item.producto.nombre_producto }}', '{% url 'eliminar_producto_carrito' carrito_item.producto.id carrito_item.id %}')">
+            <i class="fa fa-trash-alt"></i>
+            Eliminar
+        </button>
         </td>
     </tr>
     {% endfor %}
@@ -260,5 +470,111 @@ aside.col-lg-3 .card-body .btn-primary:hover {
     <!-- ============================ COMPONENT 1 END .// ================================= -->
     
     </div> <!-- container .//  -->
-    </section>
-{% endblock %}        
+
+    <!-- MODAL PERSONALIZADO PARA CONFIRMACIÓN DE ELIMINACIÓN -->
+    <div class="modal-overlay" id="deleteModal">
+        <div class="modal-content">
+            <div class="modal-icon">
+                <i class="fa fa-exclamation-triangle"></i>
+            </div>
+            <h2 class="modal-title">¿Eliminar producto?</h2>
+            <p class="modal-message" id="modalMessage">
+                ¿Estás seguro que deseas eliminar este producto del carrito?
+            </p>
+            <div class="modal-buttons">
+                <button class="btn-confirm" onclick="confirmDelete()">
+                    <i class="fa fa-trash-alt"></i>
+                    Sí, eliminar
+                </button>
+                <button class="btn-cancel" onclick="closeModal()">
+                    <i class="fa fa-times"></i>
+                    Cancelar
+                </button>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+<!-- JAVASCRIPT PARA EL MODAL -->
+<script>
+let currentDeleteUrl = '';
+
+function showDeleteModal(productName, deleteUrl) {
+    const modal = document.getElementById('deleteModal');
+    const message = document.getElementById('modalMessage');
+    const modalContent = modal.querySelector('.modal-content');
+    
+    currentDeleteUrl = deleteUrl;
+    message.innerHTML = `¿Estás seguro que deseas eliminar <strong>"${productName}"</strong> del carrito?<br><small>Esta acción no se puede deshacer.</small>`;
+    
+    modal.style.display = 'flex';
+    modalContent.classList.add('show');
+    
+    // Prevenir scroll del body
+    document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+    const modal = document.getElementById('deleteModal');
+    const modalContent = modal.querySelector('.modal-content');
+    
+    modalContent.classList.remove('show');
+    
+    setTimeout(() => {
+        modal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+    }, 300);
+}
+
+function confirmDelete() {
+    if (currentDeleteUrl) {
+        // Mostrar notificación de eliminación (opcional)
+        showSuccessMessage();
+        
+        // Redirigir para eliminar el producto
+        setTimeout(() => {
+            window.location.href = currentDeleteUrl;
+        }, 500);
+    }
+}
+
+function showSuccessMessage() {
+    // Crear notificación de éxito
+    const notification = document.createElement('div');
+    notification.className = 'success-notification';
+    notification.innerHTML = `
+        <i class="fa fa-check-circle"></i>
+        Eliminando producto...
+    `;
+    
+    document.body.appendChild(notification);
+    
+    setTimeout(() => {
+        if (notification.parentNode) {
+            notification.remove();
+        }
+    }, 3000);
+}
+
+// Cerrar modal al hacer click fuera
+document.getElementById('deleteModal').addEventListener('click', function(e) {
+    if (e.target === this) {
+        closeModal();
+    }
+});
+
+// Cerrar modal con tecla Escape
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        closeModal();
+    }
+});
+
+// Prevenir que el modal se cierre al hacer click dentro del contenido
+document.querySelector('.modal-content').addEventListener('click', function(e) {
+    e.stopPropagation();
+});
+</script>
+
+{% endblock %}
