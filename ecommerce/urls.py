@@ -23,6 +23,7 @@ from django.conf import settings
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',views.inicio,name='inicio'),
+    path('accounts/', include('allauth.urls')), 
     path('tienda/',include('tienda.urls')),
     path('carrito/', include('carrito.urls')),
     path('auths/', include('auths.urls')),

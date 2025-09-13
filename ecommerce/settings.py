@@ -12,6 +12,18 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 from pathlib import Path
 import os
+import environ
+
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+env = environ.Env()
+environ.Env.read_env(BASE_DIR / ".env")
+# Inicializar
+env = environ.Env()
+
+# Leer archivo .env si existe
+environ.Env.read_env()
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -47,8 +59,32 @@ INSTALLED_APPS = [
     'rest_framework',
     'pedidos',
     'paypal.standard.ipn',
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
     #'cuentas',
 ]
+#perfecto!
+# Google OAuth
+SOCIALACCOUNT_PROVIDERS = {
+    "google": {
+        "SCOPE": ["profile", "email"],
+        "AUTH_PARAMS": {"access_type": "online"},
+        "APP": {
+            "client_id": env("GOOGLE_CLIENT_ID"),
+            "secret": env("GOOGLE_CLIENT_SECRET"),
+            "key": ""
+        }
+    }
+}
+
+# --- Allauth Modern Configuration ---
+SITE_ID = 1
+
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -58,6 +94,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'allauth.account.middleware.AccountMiddleware',
+
 ]
 
 ROOT_URLCONF = 'ecommerce.urls'
@@ -175,3 +213,5 @@ JAZZMIN_SETTINGS = {
 #ajustes para paypal
 PAYPAL_TEST=True
 PAYPAL_RECEIVER_EMAIL= 'personalcodelatin@gmail.com'
+
+SOCIALACCOUNT_LOGIN_ON_GET = True
