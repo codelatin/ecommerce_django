@@ -66,7 +66,7 @@ SECRET_KEY = '910CWYyrnpJnjlVdUGmS5IZ8SSyGPEJR3OhemaMrfM9zrv6KZ0Zu8VuIhQNe3Iwomd
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env("DEBUG")
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["127.0.0.1", "localhost", "ecommerce-latinshop.onrender.com"]
 
 
 RENDER_EXTERNAL_HOSTNAME = env('RENDER_EXTERNAL_HOSTNAME', default=None)
