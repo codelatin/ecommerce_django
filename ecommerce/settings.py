@@ -16,14 +16,42 @@ import environ
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-env = environ.Env()
-environ.Env.read_env(BASE_DIR / ".env")
 # Inicializar
 env = environ.Env()
 
 # Leer archivo .env si existe
-environ.Env.read_env()
+# Cargar variables de entorno desde .env
+env_file = BASE_DIR / '.env'
+if env_file.exists():
+    print(f"✅ Cargando variables de entorno desde: {env_file}")
+    environ.Env.read_env(env_file)
+else:
+    print(f"❌ ADVERTENCIA: No se encontró {env_file}. Asegúrate de crearlo.")
+#railway app
+# ----------------------------------------------------------
+# CARGAR VARIABLES DE ENTORNO SEGÚN EL AMBIENTE
+# ----------------------------------------------------------
 
+# Detectar si estamos en Railway (Railway define RAILWAY_ENVIRONMENT)
+#RAILWAY_ENV = os.getenv('RAILWAY_ENVIRONMENT') is not None
+'''
+if RAILWAY_ENV:
+    # En Railway, cargar .env si existe (opcional, normalmente las variables ya están en el entorno)
+    env_file = os.path.join(BASE_DIR, '.env')
+    if os.path.exists(env_file):
+        print(f"✅ Cargando variables de entorno desde: {env_file} (Railway)")
+        environ.Env.read_env(env_file)
+    else:
+        print("ℹ️  Usando variables de entorno del sistema (Railway).")
+else:
+    # En local, cargar .env (que YA tienes)
+    env_file = os.path.join(BASE_DIR, '.env')
+    if os.path.exists(env_file):
+        print(f"✅ Cargando variables de entorno desde: {env_file} (Local)")
+        environ.Env.read_env(env_file)
+    else:
+        print(f"❌ ADVERTENCIA: No se encontró {env_file}. Usando variables del sistema.")
+'''
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -33,13 +61,20 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-!g08$pjbg2&$05nt$y5*tz0h%2vp(n^rw+g5sqg=6ovtv=ot5t'
+SECRET_KEY = '910CWYyrnpJnjlVdUGmS5IZ8SSyGPEJR3OhemaMrfM9zrv6KZ0Zu8VuIhQNe3Iwomd4'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env("DEBUG")
 
 ALLOWED_HOSTS = []
 
+
+RENDER_EXTERNAL_HOSTNAME = env('RENDER_EXTERNAL_HOSTNAME', default=None)
+if RENDER_EXTERNAL_HOSTNAME:
+    ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
+else:
+    ALLOWED_HOSTS.append("localhost")
+    ALLOWED_HOSTS.append("127.0.0.1")
 
 # Application definition
 
@@ -95,6 +130,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'allauth.account.middleware.AccountMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 
 ]
 
@@ -127,8 +163,13 @@ AUTH_USER_MODEL = 'auths.Auth'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': env('DB_NAME'),
+        'USER': env('DB_USER'),
+        'PASSWORD': env('DB_PASSWORD'),
+        'HOST': env('DB_HOST'),
+        'PORT': env('DB_PORT'),
+      
     }
 }
 
@@ -175,7 +216,13 @@ STATICFILES_DIRS = [
 ]
 STATIC_ROOT = BASE_DIR / "static"
 
+if not DEBUG:
+    # Tell Django to copy static assets into a path called `staticfiles` (this is specific to Render)
+    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
+    # Enable the WhiteNoise storage backend, which compresses static files to reduce disk use
+    # and renames the files with unique names for each version to support long-term caching
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 #los archovos media
 MEDIA_URL= '/media/'
 MEDIA_ROOT= BASE_DIR /'media'
@@ -189,12 +236,12 @@ MESSAGE_TAGS = {
 
 #MI CONFIGURACION PARA VALIDAR LA CUENTA POR SMTP
 #EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_HOST_USER ='codelatincolombia@gmail.com'
-EMAIL_HOST_PASSWORD='qzbt vepo ggqi gmic'
-EMAIL_USE_TLS= True
-DEFAULT_FROM_EMAIL='codelatincolombia@gmail.com'
+EMAIL_HOST = env('EMAIL_HOST')
+EMAIL_PORT = env('EMAIL_PORT')
+EMAIL_HOST_USER =env('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD=env('EMAIL_HOST_PASSWORD')
+EMAIL_USE_TLS= env('EMAIL_USE_TLS')
+DEFAULT_FROM_EMAIL=env('DEFAULT_FROM_EMAIL')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
