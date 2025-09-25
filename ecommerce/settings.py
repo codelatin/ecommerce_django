@@ -169,6 +169,11 @@ DATABASES = {
         'PASSWORD': env('DB_PASSWORD'),
         'HOST': env('DB_HOST'),
         'PORT': env('DB_PORT'),
+        'CONN_MAX_AGE': 60,          # Reutiliza conexiones hasta 60s
+        'CONN_HEALTH_CHECKS': True,  # Revisa salud de las conexiones antes de usarlas
+        'OPTIONS': {
+            'sslmode': 'require',    # Render obliga a usar SSL
+        },
       
     }
 }
