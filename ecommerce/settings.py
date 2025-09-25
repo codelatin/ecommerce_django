@@ -162,21 +162,20 @@ AUTH_USER_MODEL = 'auths.Auth'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': env('DB_NAME'),
-        'USER': env('DB_USER'),
-        'PASSWORD': env('DB_PASSWORD'),
-        'HOST': env('DB_HOST'),
-        'PORT': env('DB_PORT'),
-        'CONN_MAX_AGE': 60,          # Reutiliza conexiones hasta 60s
-        'CONN_HEALTH_CHECKS': True,  # Revisa salud de las conexiones antes de usarlas
-        'OPTIONS': {
-            'sslmode': 'require',    # Render obliga a usar SSL
+    "default": {
+        "ENGINE": "django_db_geventpool.backends.postgresql_psycopg2",
+        "NAME": os.getenv("DB_NAME"),
+        "USER": os.getenv("DB_USER"),
+        "PASSWORD": os.getenv("DB_PASSWORD"),
+        "HOST": os.getenv("DB_HOST"),
+        "PORT": os.getenv("DB_PORT"),
+        "CONN_MAX_AGE": 0,  # con geventpool debe ser 0
+        "OPTIONS": {
+            "MAX_CONNS": 20,  # Ajusta según el límite de tu plan en Render
         },
-      
     }
 }
+
 
 
 # Password validation
