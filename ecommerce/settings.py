@@ -13,6 +13,9 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 from pathlib import Path
 import os
 import environ
+import dj_database_url
+from decouple import config
+
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -64,17 +67,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = '910CWYyrnpJnjlVdUGmS5IZ8SSyGPEJR3OhemaMrfM9zrv6KZ0Zu8VuIhQNe3Iwomd4'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env("DEBUG")
+DEBUG = True
 
-ALLOWED_HOSTS = ["127.0.0.1", "localhost", "ecommerce-latinshop.onrender.com"]
-
-
-RENDER_EXTERNAL_HOSTNAME = env('RENDER_EXTERNAL_HOSTNAME', default=None)
-if RENDER_EXTERNAL_HOSTNAME:
-    ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
-else:
-    ALLOWED_HOSTS.append("localhost")
-    ALLOWED_HOSTS.append("127.0.0.1")
+ALLOWED_HOSTS = ['571951bc2cff.ngrok-free.app','127.0.0.1', 'localhost']
+CSRF_TRUSTED_ORIGINS = ['https://571951bc2cff.ngrok-free.app']
 
 # Application definition
 
@@ -162,20 +158,11 @@ AUTH_USER_MODEL = 'auths.Auth'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 DATABASES = {
-    "default": {
-        "ENGINE": "django_db_geventpool.backends.postgresql_psycopg2",
-        "NAME": os.getenv("DB_NAME"),
-        "USER": os.getenv("DB_USER"),
-        "PASSWORD": os.getenv("DB_PASSWORD"),
-        "HOST": os.getenv("DB_HOST"),
-        "PORT": os.getenv("DB_PORT"),
-        "CONN_MAX_AGE": 0,  # con geventpool debe ser 0
-        "OPTIONS": {
-            "MAX_CONNS": 20,  # Ajusta según el límite de tu plan en Render
-        },
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
 
 
 # Password validation
