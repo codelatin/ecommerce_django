@@ -99,10 +99,12 @@ class ProductoOrdenadoAdmin(admin.ModelAdmin):
         }),
     )
 
+    # === FUNCIONES CORREGIDAS PARA TU MODELO VARIACION ===
     def get_variacion_valor(self, obj, tipo):
-        if obj.variaciones:
-            if obj.variaciones.tipo_variacion.lower() == tipo.lower():
-                return obj.variaciones.valor
+        """Busca una variación por categoría (ej. 'color', 'talla') y devuelve su valor."""
+        for variacion in obj.variaciones.all():
+            if variacion.variacion_categoria == tipo:
+                return variacion.valor_variacion
         return '-'
 
     def color(self, obj):
@@ -110,7 +112,7 @@ class ProductoOrdenadoAdmin(admin.ModelAdmin):
     color.short_description = 'Color'
 
     def size(self, obj):
-        return self.get_variacion_valor(obj, 'talla')  # cambia a 'size' si usas inglés
+        return self.get_variacion_valor(obj, 'talla')
     size.short_description = 'Talla/Size'
 
     def color_display(self, obj):

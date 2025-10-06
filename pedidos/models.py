@@ -50,11 +50,7 @@ class ProductoOrdenado(models.Model):
     pago = models.ForeignKey(Pago, on_delete=models.SET_NULL, null=True, blank=True)
     user = models.ForeignKey(Auth, on_delete=models.CASCADE)
     producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
-    variaciones = models.ForeignKey(
-        Variacion,
-        on_delete=models.SET_NULL,
-        null=True,
-        blank=True)
+    variaciones= models.ManyToManyField(Variacion, blank=True)
 
     cantidad = models.IntegerField()
     precio_producto = models.FloatField()
