@@ -1,0 +1,238 @@
+{% autoescape off %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7fa;
+            padding: 20px;
+        }
+        
+        .email-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 40px 30px;
+            text-align: center;
+            color: white;
+        }
+        
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+        
+        .check-icon {
+            width: 60px;
+            height: 60px;
+            background-color: #48bb78;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+        }
+        
+        .content {
+            padding: 40px 30px;
+        }
+        
+        .greeting {
+            font-size: 24px;
+            color: #2d3748;
+            margin-bottom: 15px;
+        }
+        
+        .intro-text {
+            color: #4a5568;
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+        
+        .order-number {
+            background-color: #edf2f7;
+            border-left: 4px solid #667eea;
+            padding: 15px 20px;
+            margin-bottom: 30px;
+            border-radius: 4px;
+        }
+        
+        .order-number strong {
+            color: #667eea;
+            font-size: 18px;
+        }
+        
+        .section-title {
+            font-size: 20px;
+            color: #2d3748;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+        
+        .products-list {
+            list-style: none;
+            margin-bottom: 30px;
+        }
+        
+        .product-item {
+            background-color: #f7fafc;
+            padding: 15px 20px;
+            margin-bottom: 12px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid #e2e8f0;
+        }
+        
+        .product-info {
+            flex: 1;
+        }
+        
+        .product-name {
+            font-weight: 600;
+            color: #2d3748;
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+        
+        .product-details {
+            color: #718096;
+            font-size: 14px;
+        }
+        
+        .product-price {
+            font-weight: 700;
+            color: #667eea;
+            font-size: 16px;
+            margin-left: 15px;
+        }
+        
+        .total-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px 30px;
+            border-radius: 8px;
+            margin-top: 30px;
+            text-align: center;
+        }
+        
+        .total-label {
+            font-size: 16px;
+            margin-bottom: 8px;
+            opacity: 0.9;
+        }
+        
+        .total-amount {
+            font-size: 32px;
+            font-weight: 700;
+        }
+        
+        .footer {
+            background-color: #f7fafc;
+            padding: 30px;
+            text-align: center;
+            color: #718096;
+        }
+        
+        .footer-text {
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+        
+        .company-name {
+            color: #667eea;
+            font-weight: 600;
+        }
+        
+        @media only screen and (max-width: 600px) {
+            .email-container {
+                border-radius: 0;
+            }
+            
+            .header, .content, .footer {
+                padding: 25px 20px;
+            }
+            
+            .product-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .product-price {
+                margin-left: 0;
+                margin-top: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="email-container">
+        <div class="header">
+            <div class="check-icon">✓</div>
+            <h1>¡Pedido Confirmado!</h1>
+        </div>
+        
+        <div class="content">
+            <h2 class="greeting">¡Hola {{ user.first_name|default:user.username }}!</h2>
+            
+            <p class="intro-text">
+                Hemos recibido tu pedido y ya está siendo procesado. 
+                Te notificaremos cuando esté listo para envío.
+            </p>
+            
+            <div class="order-number">
+                <strong>Número de pedido: {{ pedido.numero_pedido }}</strong>
+            </div>
+            perfecto!
+            <h3 class="section-title">Detalles del pedido</h3>
+            
+            <ul class="products-list">
+                {% for item in productos %}
+                <li class="product-item">
+                    <div class="product-info">
+                        <div class="product-name">{{ item.producto.nombre }}</div>
+                        <div class="product-details">Cantidad: {{ item.cantidad }}</div>
+                    </div>
+                    <div class="product-price">${{ item.precio_producto }}</div>
+                </li>
+                {% endfor %}
+            </ul>
+            
+            <div class="total-section">
+                <div class="total-label">Total pagado</div>
+                <div class="total-amount">${{ total }}</div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p class="footer-text">
+                Gracias por tu compra en <span class="company-name">Codelatin</span>
+            </p>
+            <p style="font-size: 14px; color: #a0aec0; margin-top: 15px;">
+                Si tienes alguna pregunta, no dudes en contactarnos.
+            </p>
+        </div>
+    </div>
+</body>
+</html>
+{% endautoescape %}

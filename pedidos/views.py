@@ -10,12 +10,14 @@ from paypal.standard.forms import PayPalPaymentsForm
 from django.conf import settings
 import uuid
 from django.contrib import messages
-
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
 # Importaciones para PayPal IPN
 from paypal.standard.models import ST_PP_COMPLETED
 from paypal.standard.ipn.signals import valid_ipn_received, invalid_ipn_received
 from django.dispatch import receiver
 from django.views.decorators.csrf import csrf_exempt
+from django.core.mail import EmailMultiAlternatives
 
 
 # Create your views here.    
@@ -43,9 +45,9 @@ def pagos(request):
             'item_name': f'Pedido {pedido.numero_pedido}',
             'invoice': str(uuid.uuid4()),
             'currency_code': 'USD',
-            'notify_url': f'http://{host}{reverse("paypal-ipn")}',
-            'return_url': f'http://{host}{reverse("pago_exitoso")}',
-            'cancel_return': f'http://{host}{reverse("pago_cancelado")}',
+            'notify_url': f'https://{host}{reverse("paypal-ipn")}',
+            'return_url': f'https://{host}{reverse("pago_exitoso")}',
+            'cancel_return': f'https://{host}{reverse("pago_cancelado")}',
             'custom': str(pedido.id),
             'no_shipping': 1,
         }
@@ -105,9 +107,8 @@ def realizar_pedido(request):
             pedido.numero_pedido = f"{hoy}{pedido.id}"
             pedido.save()
 
-            # === CREAR PRODUCTOS DEL PEDIDO (CORREGIDO PARA ManyToMany) ===
+            # === CREAR PRODUCTOS DEL PEDIDO ===
             for carrito_item in carrito_items:
-                # Crear el ProductoOrdenado SIN variaciones primero
                 producto_ordenado = ProductoOrdenado.objects.create(
                     pedido=pedido,
                     pago=None,
@@ -117,7 +118,6 @@ def realizar_pedido(request):
                     precio_producto=carrito_item.producto.precio,
                     ordenado=False
                 )
-                # Asignar variaciones si existen (usando .set())
                 if carrito_item.variaciones.exists():
                     producto_ordenado.variaciones.set(carrito_item.variaciones.all())
 
@@ -131,14 +131,13 @@ def realizar_pedido(request):
                 'item_name': f'Pedido {pedido.numero_pedido}',
                 'invoice': str(uuid.uuid4()),
                 'currency_code': 'USD',
-                'notify_url': f'http://{host}{reverse("paypal-ipn")}',
-                'return_url': f'http://{host}{reverse("pago_exitoso")}',
-                'cancel_return': f'http://{host}{reverse("pago_cancelado")}',
+                'notify_url': f'https://{host}{reverse("paypal-ipn")}',
+                'return_url': f'https://{host}{reverse("pago_exitoso")}',
+                'cancel_return': f'https://{host}{reverse("pago_cancelado")}',
                 'custom': str(pedido.id),
                 'no_shipping': 1,
                 'no_note': 1,
-            } 
-
+            }
             paypal_form = PayPalPaymentsForm(initial=paypal_dict)
 
             context = {
@@ -224,16 +223,36 @@ def paypal_payment_received(sender, **kwargs):
             pedido.estado = 'Procesando'
             pedido.save()
 
-            # Actualizar productos existentes (NO crear nuevos)
-            ProductoOrdenado.objects.filter(pedido=pedido).update(
-                pago=pago,
-                ordenado=True
-            )
+            # Actualizar stock y marcar productos como ordenados
+            productos_ordenados = ProductoOrdenado.objects.filter(pedido=pedido)
+            for po in productos_ordenados:
+                po.producto.stock -= po.cantidad
+                po.producto.save()
+                po.pago = pago
+                po.ordenado = True
+                po.save()
 
             # Limpiar carrito
             Carrito_Item.objects.filter(user=pedido.user).delete()
 
-            print(f"✅ Pago confirmado para pedido {pedido.numero_pedido}")
+            # ✅ ENVIAR CORREO DE CONFIRMACIÓN
+            mensaje_html = render_to_string('pedidos/email_confirmacion_pedido.html', {
+                'user': pedido.user,
+                'pedido': pedido,
+                'productos': productos_ordenados,
+                'total': pedido.total_pedido,
+            })
+            asunto = f'¡Tu pedido {pedido.numero_pedido} ha sido confirmado!'
+            mensaje_texto = strip_tags(mensaje_html)
+            email_envio = EmailMultiAlternatives(
+                subject=asunto,
+                body=mensaje_texto,
+                to=[pedido.user.email]
+            )
+            email_envio.attach_alternative(mensaje_html, "text/html")
+            email_envio.send()
+
+            print(f"✅ Pago confirmado, stock actualizado y correo enviado para pedido {pedido.numero_pedido}")
 
         except Pedido.DoesNotExist:
             print(f"⚠️ Pedido no encontrado o ya procesado: {ipn_obj.custom}")
@@ -273,13 +292,11 @@ def paypal_return(request):
                 pedido.estado = 'Procesando'
                 pedido.save()
 
-                # ✅ SOLO ACTUALIZAR, NO CREAR NUEVOS
                 ProductoOrdenado.objects.filter(pedido=pedido).update(
                     pago=pago,
                     ordenado=True
                 )
 
-                # Limpiar carrito
                 Carrito_Item.objects.filter(user=request.user).delete()
 
             print("Pedido procesado exitosamente desde paypal_return")

@@ -69,9 +69,16 @@ SECRET_KEY = '910CWYyrnpJnjlVdUGmS5IZ8SSyGPEJR3OhemaMrfM9zrv6KZ0Zu8VuIhQNe3Iwomd
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['571951bc2cff.ngrok-free.app','127.0.0.1', 'localhost']
-CSRF_TRUSTED_ORIGINS = ['https://571951bc2cff.ngrok-free.app']
+#DEBUG = env.bool('DEBUG', default=False)
+ALLOWED_HOSTS = [
+    '.trycloudflare.com',
+    'localhost',
+    '127.0.0.1',
+]
 
+CSRF_TRUSTED_ORIGINS = [
+    'https://*.trycloudflare.com',
+]
 # Application definition
 
 INSTALLED_APPS = [
